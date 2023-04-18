@@ -16,6 +16,8 @@ namespace AntoNamespace
         public bool mute;
         //Aggiungere tipo audio? cuffie, Casse, ecc...
 
+        public string language;
+
 
         //VIDEO SETTINGS
         //Valutare l'idea di sostituire la stringa con un id

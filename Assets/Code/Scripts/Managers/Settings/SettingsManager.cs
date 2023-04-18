@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System;
 
 namespace AntoNamespace
 {
@@ -10,9 +11,11 @@ namespace AntoNamespace
     {
 
         //Instanza del singleton
-        static SettingsManager instance;
+        public static SettingsManager instance;
 
-        //TODO: Aggiungere dei delegate per la gestione di eventi
+        //EVENTI
+        public static event Action OnSettingsChange;
+        public static event Action<LocalizationSystem.Language> OnLanguageChange;
         
         //Path di salvataggio file
         static string path
@@ -28,7 +31,8 @@ namespace AntoNamespace
         SettingsData defaultSettings;
 
 
-        #region SETTINGS
+        //Tutti le impostazioni modificabili nel menù
+
         [Header("AUDIO SETTINGS")]
         
         [Range(0,1)]
@@ -44,8 +48,9 @@ namespace AntoNamespace
 
         [Header("VIDEO SETTINGS")]
         Resolution[] resolution;
-        
-        #endregion
+
+
+        public LocalizationSystem.Language language = LocalizationSystem.Language.English;
 
 
 
@@ -74,10 +79,14 @@ namespace AntoNamespace
 
                 //Legge il file delle impostazioni e le applica 
                 GetSettingsConfiguration();
+                
+                //Aggiundo la funzione di update all'evento.
+                //Ogni volta che l'evento viene triggerato, anche la funzione di update
+                //verrà chiamata
+                OnSettingsChange += UpdateSettingConfiguration;
             }
 
         }
-
 
         #region SETTINGS SAVE FUNCTIONS
 
@@ -121,6 +130,7 @@ namespace AntoNamespace
             this.sfxVolume = currentSettings.sfxVolume;
             this.musicVolume = currentSettings.musicVolume;
             this.mute = currentSettings.mute;
+            this.language = System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language);
         }
     
         #endregion
