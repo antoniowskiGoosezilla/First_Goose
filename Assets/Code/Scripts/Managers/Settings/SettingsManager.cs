@@ -40,6 +40,7 @@ namespace AntoNamespace
         //Da mettere PRIVATE quando verrà inserito una UI
 
         [Header("AUDIO SETTINGS")]
+        [Space]
         
         [Range(0,1)]
         public float masterVolume;

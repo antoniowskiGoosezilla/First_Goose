@@ -13,6 +13,7 @@ namespace AntoNamespace
                 French
             }
 
+            //la ligue viene sincronizzata dal SettingsManager
             public static Language language;
 
             private static Dictionary<string,string> englishLocalization;

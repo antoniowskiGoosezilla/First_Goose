@@ -157,7 +157,6 @@ MonoBehaviour:
   sfxVolume: 0
   mute: 0
   language: 1
-  oldLanguage: 0
 --- !u!4 &95712650
 Transform:
   m_ObjectHideFlags: 0
