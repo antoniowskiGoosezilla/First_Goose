@@ -15,6 +15,11 @@ namespace AntoNamespace
 
         //EVENTI
         public static event Action OnSettingsChange;
+
+        public static event Action<float> OnMasterVolumeSettingsChange;
+        public static event Action<float> OnSFXVolumeSettingsChange;
+        public static event Action<float> OnMusicVolumeSettingsChange;
+
         public static event Action<LocalizationSystem.Language> OnLanguageChange;
         
         //Path di salvataggio file
@@ -32,6 +37,7 @@ namespace AntoNamespace
 
 
         //Tutti le impostazioni modificabili nel menù
+        //Da mettere PRIVATE quando verrà inserito una UI
 
         [Header("AUDIO SETTINGS")]
         
@@ -47,7 +53,7 @@ namespace AntoNamespace
         public bool mute;
 
         [Header("VIDEO SETTINGS")]
-        Resolution[] resolution;
+        public Resolution[] resolution;
 
 
         public LocalizationSystem.Language language = LocalizationSystem.Language.English;
@@ -87,6 +93,7 @@ namespace AntoNamespace
             }
 
         }
+
 
         #region SETTINGS SAVE FUNCTIONS
 
@@ -130,9 +137,54 @@ namespace AntoNamespace
             this.sfxVolume = currentSettings.sfxVolume;
             this.musicVolume = currentSettings.musicVolume;
             this.mute = currentSettings.mute;
-            this.language = System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language);
+            this.language = System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
         }
     
+        #endregion
+
+        #region SET FUNCTIONS
+        public void SetMasterVolume(float newVolume)
+        {
+            if(newVolume > 1)
+                newVolume = 1;
+
+            if(newVolume < 0)
+                newVolume = 0;
+
+            masterVolume = newVolume;
+
+            //Invochiamo l'evento in moodo che tutti imoduli interessati da cambiamenti nelle
+            //impostazioni modifichino di conseguenza se stessi
+            OnMasterVolumeSettingsChange?.Invoke(newVolume);
+        }
+        public void SetMusicVolume(float newVolume)
+        {
+            if(newVolume > 1)
+                newVolume = 1;
+
+            if(newVolume < 0)
+                newVolume = 0;
+
+            musicVolume = newVolume;
+
+            //Invochiamo l'evento in moodo che tutti imoduli interessati da cambiamenti nelle
+            //impostazioni modifichino di conseguenza se stessi
+            OnMusicVolumeSettingsChange?.Invoke(newVolume);
+        }
+        public void SetSFXVolume(float newVolume)
+        {
+            if(newVolume > 1)
+                newVolume = 1;
+
+            if(newVolume < 0)
+                newVolume = 0;
+
+            sfxVolume = newVolume;
+
+            //Invochiamo l'evento in moodo che tutti imoduli interessati da cambiamenti nelle
+            //impostazioni modifichino di conseguenza se stessi
+            OnSFXVolumeSettingsChange?.Invoke(newVolume);
+        }
         #endregion
     }
 
