@@ -57,6 +57,8 @@ namespace AntoNamespace
 
 
         public LocalizationSystem.Language language = LocalizationSystem.Language.English;
+        [SerializeField]
+        LocalizationSystem.Language oldLanguage;
 
 
 
@@ -85,8 +87,12 @@ namespace AntoNamespace
 
                 //Legge il file delle impostazioni e le applica 
                 GetSettingsConfiguration();
-                
-                //Aggiundo la funzione di update all'evento.
+
+                //Inizializziamo il sistema di localizzazione.
+                //Vengono creati i Dizionari con le stringhe tradotte ed impostata la lingua
+                LocalizationSystem.Init();
+
+                //Aggiungo la funzione di update all'evento.
                 //Ogni volta che l'evento viene triggerato, anche la funzione di update
                 //verrà chiamata
                 OnSettingsChange += UpdateSettingConfiguration;
@@ -137,7 +143,9 @@ namespace AntoNamespace
             this.sfxVolume = currentSettings.sfxVolume;
             this.musicVolume = currentSettings.musicVolume;
             this.mute = currentSettings.mute;
-            this.language = System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
+            this.language = LocalizationSystem.Language.English;
+            this.oldLanguage = language;
+            //System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
         }
     
         #endregion
@@ -185,6 +193,13 @@ namespace AntoNamespace
             //impostazioni modifichino di conseguenza se stessi
             OnSFXVolumeSettingsChange?.Invoke(newVolume);
         }
+        public void SetLanguage(LocalizationSystem.Language newLanguage)
+        {
+            language = newLanguage;
+
+            OnLanguageChange?.Invoke(newLanguage);
+        }
+
         #endregion
     }
 

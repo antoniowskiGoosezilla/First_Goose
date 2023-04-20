@@ -33,7 +33,7 @@ namespace AntoNamespace
 
                 //Aggiungiamo il cambio di lingua all'evento.
                 //La lingua viene specifcata quando l'evento viene chiamato
-                SettingsManager.OnLanguageChange += SetNewLanguage;  
+                SettingsManager.OnLanguageChange += SetNewLanguage;
 
             }
 
