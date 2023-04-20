@@ -57,8 +57,6 @@ namespace AntoNamespace
 
 
         public LocalizationSystem.Language language = LocalizationSystem.Language.English;
-        [SerializeField]
-        LocalizationSystem.Language oldLanguage;
 
 
 
@@ -143,9 +141,7 @@ namespace AntoNamespace
             this.sfxVolume = currentSettings.sfxVolume;
             this.musicVolume = currentSettings.musicVolume;
             this.mute = currentSettings.mute;
-            this.language = LocalizationSystem.Language.English;
-            this.oldLanguage = language;
-            //System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
+            this.language = LocalizationSystem.Language.English; //System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
         }
     
         #endregion

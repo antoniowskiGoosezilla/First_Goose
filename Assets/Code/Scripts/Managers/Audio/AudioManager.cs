@@ -55,6 +55,8 @@ namespace AntoNamespace{
             instance = this;
             DontDestroyOnLoad(gameObject);
             SetUpSoundPool();
+
+            //Events
             SettingsManager.OnMasterVolumeSettingsChange += SetUpMasterVolume;
             SettingsManager.OnMusicVolumeSettingsChange += SetUpMusicVolume;
             SettingsManager.OnSFXVolumeSettingsChange += SetUpSFXVolume;
