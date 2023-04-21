@@ -10,6 +10,7 @@ namespace AntoNamespace
     {
         //Singleton
         //private static InputManager instance;
+        private static bool isInit = false;
 
         //Action Controller
         private static PlayerInputSystem inputAction;
@@ -47,6 +48,11 @@ namespace AntoNamespace
             }
             instance = this;
             DontDestroyOnLoad(gameObject);*/
+
+            if(isInit)
+                return;
+            
+            isInit = true;
 
             if(inputAction == null)
                 inputAction = new PlayerInputSystem();

@@ -57,9 +57,9 @@ namespace AntoNamespace{
             SetUpSoundPool();
 
             //Events
-            SettingsManager.OnMasterVolumeSettingsChange += SetUpMasterVolume;
-            SettingsManager.OnMusicVolumeSettingsChange += SetUpMusicVolume;
-            SettingsManager.OnSFXVolumeSettingsChange += SetUpSFXVolume;
+            SettingsSystem.OnMasterVolumeSettingsChange += SetUpMasterVolume;
+            SettingsSystem.OnMusicVolumeSettingsChange += SetUpMusicVolume;
+            SettingsSystem.OnSFXVolumeSettingsChange += SetUpSFXVolume;
         }
 
         void Start()

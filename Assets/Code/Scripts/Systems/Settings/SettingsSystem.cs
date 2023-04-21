@@ -7,11 +7,13 @@ using System;
 
 namespace AntoNamespace
 {
-    public class SettingsManager : MonoBehaviour
+    public static class SettingsSystem
     {
 
         //Instanza del singleton
-        private static SettingsManager instance;
+        //private static SettingsManager instance;
+
+        private static bool isInit = false;
 
         //EVENTI
         public static event Action OnSettingsChange;
@@ -30,8 +32,8 @@ namespace AntoNamespace
         }
 
         //Valori di impostazione che vengono usate al momento e quelli di default per il ripristino
-        SettingsData currentSettings;
-        SettingsData defaultSettings;
+        static SettingsData currentSettings;
+        static SettingsData defaultSettings;
 
 
         //Tutti le impostazioni modificabili nel menù
@@ -41,35 +43,31 @@ namespace AntoNamespace
         [Space]
         
         [Range(0,1)]
-        public float masterVolume;
+        public static float masterVolume;
         
         [Range(0,1)]
-        public float musicVolume;
+        public static float musicVolume;
         
         [Range(0,1)]
-        public float sfxVolume;
+        public static float sfxVolume;
 
-        public bool mute;
-
+        public static bool mute;
+ 
         [Header("VIDEO SETTINGS")]
-        public Resolution[] resolution;
+        public static Resolution[] resolution;
 
 
-        public LocalizationSystem.Language language = LocalizationSystem.Language.English;
+        public static LocalizationSystem.Language language = LocalizationSystem.Language.English;
 
 
 
 
-        void Awake()
+        public static void Init()
         {
-            if(instance != null)
-            {
-                Destroy(gameObject);
-            }
+            if(isInit)
+                return;
 
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-
+            isInit = true;
             //Controlliamo se bisogna caricare un file di impostazioni
             //Il file viene aggiornato ogni volta che qualcosa viene cambiato
             //nelle impostazioni regolate dal setting manager
@@ -83,7 +81,7 @@ namespace AntoNamespace
                 }
 
                 //Legge il file delle impostazioni e le applica 
-                GetSettingsConfiguration();
+                LoadSettingsConfiguration();
 
                 //Inizializziamo il sistema di localizzazione.
                 //Vengono creati i Dizionari con le stringhe tradotte ed impostata la lingua
@@ -101,7 +99,7 @@ namespace AntoNamespace
 
         #region SETTINGS SAVE FUNCTIONS
 
-        void CreateSettingsConfiguration()
+        static void CreateSettingsConfiguration()
         {
             //Nuovi settings
             SettingsData newSettings = new SettingsData();
@@ -115,12 +113,12 @@ namespace AntoNamespace
             stream.Close();
         }
 
-        void UpdateSettingConfiguration()
+        static void UpdateSettingConfiguration()
         {
 
         }
 
-        void GetSettingsConfiguration()
+        static void LoadSettingsConfiguration()
         {
             
             BinaryFormatter formatter = new BinaryFormatter();
@@ -135,19 +133,19 @@ namespace AntoNamespace
             ApplySettingsConfiguration();
         }
 
-        void ApplySettingsConfiguration()
+        static void ApplySettingsConfiguration()
         {
-            this.masterVolume = currentSettings.masterVolume;
-            this.sfxVolume = currentSettings.sfxVolume;
-            this.musicVolume = currentSettings.musicVolume;
-            this.mute = currentSettings.mute;
-            this.language = LocalizationSystem.Language.English; //System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
+            SettingsSystem.masterVolume = currentSettings.masterVolume;
+            SettingsSystem.sfxVolume = currentSettings.sfxVolume;
+            SettingsSystem.musicVolume = currentSettings.musicVolume;
+            SettingsSystem.mute = currentSettings.mute;
+            SettingsSystem.language = LocalizationSystem.Language.English; //System.Enum.Parse<LocalizationSystem.Language>(currentSettings.language); //Da testare con una build
         }
     
         #endregion
 
         #region SET FUNCTIONS
-        public void SetMasterVolume(float newVolume)
+        public static void SetMasterVolume(float newVolume)
         {
             if(newVolume > 1)
                 newVolume = 1;
@@ -161,7 +159,7 @@ namespace AntoNamespace
             //impostazioni modifichino di conseguenza se stessi
             OnMasterVolumeSettingsChange?.Invoke(newVolume);
         }
-        public void SetMusicVolume(float newVolume)
+        public static void SetMusicVolume(float newVolume)
         {
             if(newVolume > 1)
                 newVolume = 1;
@@ -175,7 +173,7 @@ namespace AntoNamespace
             //impostazioni modifichino di conseguenza se stessi
             OnMusicVolumeSettingsChange?.Invoke(newVolume);
         }
-        public void SetSFXVolume(float newVolume)
+        public static void SetSFXVolume(float newVolume)
         {
             if(newVolume > 1)
                 newVolume = 1;
@@ -189,7 +187,7 @@ namespace AntoNamespace
             //impostazioni modifichino di conseguenza se stessi
             OnSFXVolumeSettingsChange?.Invoke(newVolume);
         }
-        public void SetLanguage(LocalizationSystem.Language newLanguage)
+        public static void SetLanguage(LocalizationSystem.Language newLanguage)
         {
             language = newLanguage;
 
