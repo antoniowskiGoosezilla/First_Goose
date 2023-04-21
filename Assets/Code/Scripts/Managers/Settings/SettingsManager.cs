@@ -11,15 +11,13 @@ namespace AntoNamespace
     {
 
         //Instanza del singleton
-        public static SettingsManager instance;
+        private static SettingsManager instance;
 
         //EVENTI
         public static event Action OnSettingsChange;
-
         public static event Action<float> OnMasterVolumeSettingsChange;
         public static event Action<float> OnSFXVolumeSettingsChange;
         public static event Action<float> OnMusicVolumeSettingsChange;
-
         public static event Action<LocalizationSystem.Language> OnLanguageChange;
         
         //Path di salvataggio file
@@ -90,6 +88,7 @@ namespace AntoNamespace
                 //Inizializziamo il sistema di localizzazione.
                 //Vengono creati i Dizionari con le stringhe tradotte ed impostata la lingua
                 LocalizationSystem.Init();
+                InputSystem.Init();
 
                 //Aggiungo la funzione di update all'evento.
                 //Ogni volta che l'evento viene triggerato, anche la funzione di update
