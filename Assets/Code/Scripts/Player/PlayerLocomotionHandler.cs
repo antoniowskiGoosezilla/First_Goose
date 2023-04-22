@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 //Questa classe è responsabile del movimento del giocatore.
 //Ottenendo i valori degli input, li elabora permettendo il movimento
@@ -39,8 +40,6 @@ namespace AntoNamespace
             MovePlayer(delta);
         }
 
-
-
         void Init()
         {
             characterController = GetComponent<CharacterController>();
@@ -58,6 +57,7 @@ namespace AntoNamespace
             }
             else
             {
+                movementTimer = 0;
                 velocity = Vector2.MoveTowards(velocity, Vector2.zero, 10f);
             }
 
@@ -72,7 +72,7 @@ namespace AntoNamespace
         #endregion
 
         #region ROLL
-        void TriggerRoll()
+        void TriggerRoll(InputAction.CallbackContext context)
         {
             StartCoroutine(Roll());
         }

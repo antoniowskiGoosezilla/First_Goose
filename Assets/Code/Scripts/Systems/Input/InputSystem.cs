@@ -12,14 +12,11 @@ namespace AntoNamespace
         //private static InputManager instance;
         private static bool isInit = false;
 
-        //Action Controller
-        private static PlayerInputSystem inputAction;
-
-        //Booleana per sapere quando abilitare i controlli menu e quando quelli giocatore
-        public static bool inMenu;
+        private static PlayerInputSystem inputAction;       //Action Controller
+        public static bool inMenu;                          //Booleana per sapere quando abilitare i controlli menu e quando quelli giocatore
 
 
-        //Variabili per il movimento
+        //VARIABILI PER IL MOVIMENTO
         //Sono statiche poiché il giocatore è unico e quindi non c'è bisogno
         //di avere diversi valori per gli input
         public static float horizontal;
@@ -29,11 +26,21 @@ namespace AntoNamespace
         public static Vector3 inputVector;              //Un vettore "lavorato", adattato al 3D e ad una camera angolata
         public static float inputMagnitude;
 
+
+        //VARIABILI MOUSE
+        public static Vector2 mouseScreenPosition;
+
+
+
         //Azioni che vengono triggerate in caso di pressione di tasti
         //Altri moduli possono accedervi senza avere un riferimento alla classe
-        public static event Action OnRollAction;
+        public static event Action<InputAction.CallbackContext> OnRollAction;
 
 
+        
+        
+        
+        
         //VARAIBILE PER IL CHECK DELLE INTERAZIONI
         //durante le interazioni il giocatore non deve potersi muovere
         public static bool isInteracting;
@@ -57,9 +64,10 @@ namespace AntoNamespace
             if(inputAction == null)
                 inputAction = new PlayerInputSystem();
 
-            SetupMovementInput();
+            SetUpMovementInput();
             SetUpMenuNavigation();
-            SetupRollInput();
+            SetUpRollInput();
+            SetUpAimInput();
 
             inputAction.Pause.Button.performed += OnPauseToggle;
             inputAction.Pause.Enable();
@@ -80,22 +88,24 @@ namespace AntoNamespace
         void Update(){}*/
 
         #region SET UP FUNCTIONS
-        static void SetupMovementInput(){
+        static void SetUpMovementInput(){
             inputAction.Game.Movement.started += OnMoveInput;
             inputAction.Game.Movement.performed += OnMoveInput;
             inputAction.Game.Movement.canceled += OnMoveInput; 
         }
-        static void SetupRollInput()
+        static void SetUpRollInput()
         {
-            inputAction.Game.Roll.performed += OnRollInput;
+            inputAction.Game.Roll.performed += OnRollAction;
         }
-        
-
         static void SetUpMenuNavigation()
         {
             inputAction.Menu.Navigate.started += OnMoveInMenu;
             inputAction.Menu.Navigate.performed += OnMoveInMenu;
             inputAction.Menu.Navigate.canceled += OnMoveInMenu;
+        }
+        static void SetUpAimInput()
+        {
+            inputAction.Game.Aim.performed += OnMouseMovement;
         }
 
         #endregion
@@ -113,9 +123,9 @@ namespace AntoNamespace
         {
             rawInputVector = context.ReadValue<Vector2>();
         }
-        static void OnRollInput(InputAction.CallbackContext context)
+        static void OnMouseMovement(InputAction.CallbackContext context)
         {
-            OnRollAction.Invoke();
+            mouseScreenPosition = context.ReadValue<Vector2>();
         }
         static void OnPauseToggle(InputAction.CallbackContext context)
         {
