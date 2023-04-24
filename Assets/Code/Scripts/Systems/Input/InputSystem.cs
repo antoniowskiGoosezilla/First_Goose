@@ -35,7 +35,7 @@ namespace AntoNamespace
         //Azioni che vengono triggerate in caso di pressione di tasti
         //Altri moduli possono accedervi senza avere un riferimento alla classe
         public static event Action<InputAction.CallbackContext> OnRollAction;
-
+        public static event Action<InputAction.CallbackContext> OnShootAction;
 
         
         
@@ -68,6 +68,7 @@ namespace AntoNamespace
             SetUpMenuNavigation();
             SetUpRollInput();
             SetUpAimInput();
+            SetUpShootInput();
 
             inputAction.Pause.Button.performed += OnPauseToggle;
             inputAction.Pause.Enable();
@@ -107,7 +108,10 @@ namespace AntoNamespace
         {
             inputAction.Game.Aim.performed += OnMouseMovement;
         }
-
+        static void SetUpShootInput()
+        {
+            inputAction.Game.Shoot.performed += OnShootAction;
+        }
         #endregion
 
         static void OnMoveInput(InputAction.CallbackContext context)
