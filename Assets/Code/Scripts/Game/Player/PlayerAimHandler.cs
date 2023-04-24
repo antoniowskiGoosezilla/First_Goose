@@ -19,7 +19,11 @@ namespace AntoNamespace
 
         //Sostituire con quello specifico delle armi
         private float shootingCooldown = 0.5f;
+        private float maxWeaponRange = 5f;
         private bool inCooldown;
+
+        [SerializeField]
+        LayerMask layerToCheck;
 
 
         void Awake()
@@ -48,13 +52,24 @@ namespace AntoNamespace
             //Fatti i calcoli, giriamo il giocatore verso il punto desiderato
         }
 
+
+    //Funzioni per lo sparo
+    //Considerare la possibilità di spostare queste funzioni nella classe delle armi
         void Shoot(InputAction.CallbackContext context)
         {
             if(inCooldown)
                 return;
-
+            //Ruotiamo il modello nella direzione dello sparo
             transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
-            Debug.DrawRay(transform.position, transform.forward, Color.red, 2);
+
+            //Generiamo un raggio per vedere se il proiettile colpisce il nemico
+            Ray shot = new Ray(transform.position, transform.forward);
+            RaycastHit hit;
+            bool isHit = Physics.Raycast(shot, out hit, maxWeaponRange, layerToCheck);
+            if(isHit)
+            {
+                Debug.Log("Colpito");
+            }
             inCooldown = true;
             StartCoroutine(StartShootingCooldown());
         }
