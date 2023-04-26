@@ -40,4 +40,9 @@ public abstract class CharacterStats : MonoBehaviour, IDamageble
     {
         SetCurrentHealth(health-damage);
     }
+
+    public void GetDamage(float damage, Weapon.WeaponType type)
+    {
+        
+    }
 }
