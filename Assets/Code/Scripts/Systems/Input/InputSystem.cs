@@ -36,6 +36,9 @@ namespace AntoNamespace
         //Altri moduli possono accedervi senza avere un riferimento alla classe
         public static event Action<InputAction.CallbackContext> OnRollAction;
         public static event Action<InputAction.CallbackContext> OnShootAction;
+        public static event Action<InputAction.CallbackContext> OnNextWeaponAction;
+        public static event Action<InputAction.CallbackContext> OnPreviousWeaponAction;
+        public static event Action<InputAction.CallbackContext> OnSpecificWeaponAction;
 
         
         
@@ -69,6 +72,7 @@ namespace AntoNamespace
             SetUpRollInput();
             SetUpAimInput();
             SetUpShootInput();
+            SetUpChangeWeaponInput();
 
             inputAction.Pause.Button.performed += OnPauseToggle;
             inputAction.Pause.Enable();
@@ -111,6 +115,11 @@ namespace AntoNamespace
         static void SetUpShootInput()
         {
             inputAction.Game.Shoot.performed += OnShootAction;
+        }
+        static void SetUpChangeWeaponInput()
+        {
+            inputAction.Game.NextWeapon.performed += OnNextWeaponAction;
+            inputAction.Game.PreviousWeapon.performed += OnPreviousWeaponAction;
         }
         #endregion
 

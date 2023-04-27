@@ -1,33 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInventoryHandler : MonoBehaviour
 {
-
+    [SerializeField]
     private Inventory inventory;
+    public GameObject equippedWeapon;
+    public string equippedObject; //Creare tipo Oggetto
 
-    public Weapon equippedWeapon;
-    public string equippedObject;
-
-    // Start is called before the first frame update
+    void Awake()
+    {
+        AntoNamespace.InputSystem.OnNextWeaponAction += GetNextWeapon;
+        AntoNamespace.InputSystem.OnPreviousWeaponAction += GetPreviousWeapon;
+    }
     void Start()
     {
         //Da verificare prima se è disponibile un invantario nel Run Manager
         if(inventory == null)
             inventory = new Inventory();
-
-        equippedWeapon = GetWeapon(inventory.weaponIndex);
-        equippedObject = inventory.equippedObject;
+        
+        UnequipWeapon();
+        EquipWeapon(GetWeapon(inventory.weaponIndex));
     }
 
-    // Update is called once per frame
     void Update()
     {
         
     }
 
-    public Weapon GetWeapon(int index)
+    public GameObject GetWeapon(int index)
     {
         switch(index)
         {
@@ -41,21 +44,33 @@ public class PlayerInventoryHandler : MonoBehaviour
                 return null;
         }
     }
-    public Weapon GetNextWeapon()
+    public void GetNextWeapon(InputAction.CallbackContext context)
     {
         inventory.weaponIndex += 1;
         if(inventory.weaponIndex > 2)
             inventory.weaponIndex = 0;
-        
-        return GetWeapon(inventory.weaponIndex);
+        UnequipWeapon();
+        EquipWeapon(GetWeapon(inventory.weaponIndex));
 
     }
-    public Weapon GetPreviousWeapon()
+    public void GetPreviousWeapon(InputAction.CallbackContext context)
     {
         inventory.weaponIndex -= 1;
         if(inventory.weaponIndex < 0)
             inventory.weaponIndex = 2;
         
-        return GetWeapon(inventory.weaponIndex);
+        UnequipWeapon();
+        EquipWeapon(GetWeapon(inventory.weaponIndex));
+    }
+    private void EquipWeapon(GameObject weapon)
+    {
+        equippedWeapon = Instantiate(weapon, transform.Find("RightHand").position, Quaternion.identity);
+        equippedObject = inventory.equippedObject;
+        equippedWeapon.transform.parent = transform.Find("RightHand");
+        equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z+.2f);
+    }
+    private void UnequipWeapon()
+    {
+        Destroy(equippedWeapon);
     }
 }

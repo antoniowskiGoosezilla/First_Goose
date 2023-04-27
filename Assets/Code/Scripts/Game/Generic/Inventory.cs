@@ -7,12 +7,14 @@ using System;
 //Questa classe serve ad avere un unico oggetto che può essere
 //salvato nel Run Manager in modo da tenere l'inventario sempre
 //salvato tra le scene
+[System.Serializable]
 public class Inventory
 {
-    public Weapon firstWeapon;
-    public Weapon secondWeapon;
-    public Weapon meleeWeapon;
+    public GameObject firstWeapon;
+    public GameObject secondWeapon;
+    public GameObject meleeWeapon;
 
+    //Indice per ciclare tra le armi
     public int weaponIndex;
 
     //Sostituire con la classe oggetto
@@ -30,7 +32,7 @@ public class Inventory
         weaponIndex = 0;
         equippedObject = null;
     }
-    public Inventory(Weapon first, Weapon melee)
+    public Inventory(GameObject first, GameObject melee)
     {
         firstWeapon = first;
         secondWeapon = null;

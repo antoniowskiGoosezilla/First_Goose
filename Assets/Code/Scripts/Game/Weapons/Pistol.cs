@@ -13,4 +13,9 @@ public class Pistol : Weapon
     {
 
     }
+
+    public override void Equip()
+    {
+        throw new System.NotImplementedException();
+    }
 }

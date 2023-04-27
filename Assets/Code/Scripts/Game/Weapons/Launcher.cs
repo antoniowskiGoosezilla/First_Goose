@@ -13,4 +13,9 @@ public class Launcher : Weapon
     {
         throw new System.NotImplementedException();
     }
+
+    public override void Equip()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -71,6 +71,33 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""NextWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""c29687f8-3226-4376-af23-feb1b498ffad"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PreviousWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""47f08003-6183-4e88-afa6-89abe8c27f58"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpecificWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""566a4da6-ce4b-449e-9eb1-58ad594ffd31"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -458,6 +485,39 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""action"": ""Shoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5c5b9ebc-8317-40b9-a4d6-955cd1d9c8d8"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""NextWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6060dea-dce2-4633-9b7e-08ad35510689"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PreviousWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af8a4756-a7e2-454c-b7e5-560ff64cda22"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpecificWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -648,6 +708,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         m_Game_Roll = m_Game.FindAction("Roll", throwIfNotFound: true);
         m_Game_Interact = m_Game.FindAction("Interact", throwIfNotFound: true);
         m_Game_Shoot = m_Game.FindAction("Shoot", throwIfNotFound: true);
+        m_Game_NextWeapon = m_Game.FindAction("NextWeapon", throwIfNotFound: true);
+        m_Game_PreviousWeapon = m_Game.FindAction("PreviousWeapon", throwIfNotFound: true);
+        m_Game_SpecificWeapon = m_Game.FindAction("SpecificWeapon", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Button = m_Pause.FindAction("Button", throwIfNotFound: true);
@@ -718,6 +781,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Roll;
     private readonly InputAction m_Game_Interact;
     private readonly InputAction m_Game_Shoot;
+    private readonly InputAction m_Game_NextWeapon;
+    private readonly InputAction m_Game_PreviousWeapon;
+    private readonly InputAction m_Game_SpecificWeapon;
     public struct GameActions
     {
         private @PlayerInputSystem m_Wrapper;
@@ -727,6 +793,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         public InputAction @Roll => m_Wrapper.m_Game_Roll;
         public InputAction @Interact => m_Wrapper.m_Game_Interact;
         public InputAction @Shoot => m_Wrapper.m_Game_Shoot;
+        public InputAction @NextWeapon => m_Wrapper.m_Game_NextWeapon;
+        public InputAction @PreviousWeapon => m_Wrapper.m_Game_PreviousWeapon;
+        public InputAction @SpecificWeapon => m_Wrapper.m_Game_SpecificWeapon;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -751,6 +820,15 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_GameActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnShoot;
+                @NextWeapon.started -= m_Wrapper.m_GameActionsCallbackInterface.OnNextWeapon;
+                @NextWeapon.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnNextWeapon;
+                @NextWeapon.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnNextWeapon;
+                @PreviousWeapon.started -= m_Wrapper.m_GameActionsCallbackInterface.OnPreviousWeapon;
+                @PreviousWeapon.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnPreviousWeapon;
+                @PreviousWeapon.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnPreviousWeapon;
+                @SpecificWeapon.started -= m_Wrapper.m_GameActionsCallbackInterface.OnSpecificWeapon;
+                @SpecificWeapon.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnSpecificWeapon;
+                @SpecificWeapon.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnSpecificWeapon;
             }
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
@@ -770,6 +848,15 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @NextWeapon.started += instance.OnNextWeapon;
+                @NextWeapon.performed += instance.OnNextWeapon;
+                @NextWeapon.canceled += instance.OnNextWeapon;
+                @PreviousWeapon.started += instance.OnPreviousWeapon;
+                @PreviousWeapon.performed += instance.OnPreviousWeapon;
+                @PreviousWeapon.canceled += instance.OnPreviousWeapon;
+                @SpecificWeapon.started += instance.OnSpecificWeapon;
+                @SpecificWeapon.performed += instance.OnSpecificWeapon;
+                @SpecificWeapon.canceled += instance.OnSpecificWeapon;
             }
         }
     }
@@ -847,6 +934,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnNextWeapon(InputAction.CallbackContext context);
+        void OnPreviousWeapon(InputAction.CallbackContext context);
+        void OnSpecificWeapon(InputAction.CallbackContext context);
     }
     public interface IPauseActions
     {
