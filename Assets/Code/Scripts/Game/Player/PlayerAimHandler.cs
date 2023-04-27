@@ -9,6 +9,9 @@ namespace AntoNamespace
     //Classe che gestisce sia la mira che lo shooting del giocatore
     public class PlayerAimHandler : MonoBehaviour
     {
+
+        private PlayerInventoryHandler playerInventoryHandler;
+
         private Vector3 mouseWorldPosition;
         private Plane aimPlane = new Plane(Vector3.down, 0);
 
@@ -18,8 +21,8 @@ namespace AntoNamespace
 
 
         //Sostituire con quello specifico delle armi
-        private float shootingCooldown = 0.5f;
-        private float maxWeaponRange = 5f;
+        /*private float shootingCooldown = 0.5f;
+        private float maxWeaponRange = 5f;*/
         private bool inCooldown;
 
         [SerializeField]
@@ -28,6 +31,8 @@ namespace AntoNamespace
 
         void Awake()
         {
+            playerInventoryHandler = GetComponent<PlayerInventoryHandler>();
+
             InputSystem.OnShootAction += Shoot;
         }
 
@@ -65,18 +70,20 @@ namespace AntoNamespace
             //Generiamo un raggio per vedere se il proiettile colpisce il nemico
             Ray shot = new Ray(transform.position, transform.forward);
             RaycastHit hit;
-            bool isHit = Physics.Raycast(shot, out hit, maxWeaponRange, layerToCheck);
+            Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
+            bool isHit = Physics.Raycast(shot, out hit, usedWeapon.range, layerToCheck);
             if(isHit)
             {
                 Debug.Log("Colpito");
             }
             inCooldown = true;
-            StartCoroutine(StartShootingCooldown());
+            StartCoroutine(StartShootingCooldown(usedWeapon));
         }
 
-        private IEnumerator StartShootingCooldown()
+        private IEnumerator StartShootingCooldown(Weapon usedWeapon)
         {
-            yield return new WaitForSeconds(shootingCooldown);
+
+            yield return new WaitForSeconds(usedWeapon.shotCooldown);
             inCooldown = false;
         }
     }
