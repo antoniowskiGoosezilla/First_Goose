@@ -15,6 +15,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
 
     public string weaponName;
     public string weaponBrand;
+    protected static LayerMask layerMaskToCheck = 0x6;
     //STATS
     public float damage;
     public float range;
@@ -23,6 +24,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public float precision;
     
     public float shotCooldown;              //Serve per definire il rateo di fuoco
+    public bool inCooldown;
     public float magAmmo;
     public float totalAmmo;
     public WeaponType type;

@@ -23,8 +23,6 @@ namespace AntoNamespace
         //Sostituire con quello specifico delle armi
         /*private float shootingCooldown = 0.5f;
         private float maxWeaponRange = 5f;*/
-        private bool inCooldown;
-
         [SerializeField]
         LayerMask layerToCheck;
 
@@ -62,29 +60,12 @@ namespace AntoNamespace
     //Considerare la possibilità di spostare queste funzioni nella classe delle armi
         void Shoot(InputAction.CallbackContext context)
         {
-            if(inCooldown)
+            Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
+            if(usedWeapon.inCooldown)
                 return;
             //Ruotiamo il modello nella direzione dello sparo
             transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
-
-            //Generiamo un raggio per vedere se il proiettile colpisce il nemico
-            Ray shot = new Ray(transform.position, transform.forward);
-            RaycastHit hit;
-            Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
-            bool isHit = Physics.Raycast(shot, out hit, usedWeapon.range, layerToCheck);
-            if(isHit)
-            {
-                Debug.Log("Colpito");
-            }
-            inCooldown = true;
-            StartCoroutine(StartShootingCooldown(usedWeapon));
-        }
-
-        private IEnumerator StartShootingCooldown(Weapon usedWeapon)
-        {
-
-            yield return new WaitForSeconds(usedWeapon.shotCooldown);
-            inCooldown = false;
+            usedWeapon.Shoot();
         }
     }
 }
