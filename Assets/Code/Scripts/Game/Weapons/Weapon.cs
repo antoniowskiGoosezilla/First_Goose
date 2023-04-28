@@ -15,7 +15,6 @@ public abstract class Weapon : MonoBehaviour, IEquippable
 
     public string weaponName;
     public string weaponBrand;
-    protected static LayerMask layerMaskToCheck = 0x6;
     //STATS
     public float damage;
     public float range;
@@ -29,6 +28,9 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public float totalAmmo;
     public WeaponType type;
     public int rarity;
+
+    
+    protected static LayerMask layerMaskToCheck = 0x6;
 
     public abstract void Shoot();
     public abstract void AlternativeShoot();

@@ -10,9 +10,7 @@ namespace AntoNamespace
     {
         //Singleton
         //private static InputManager instance;
-        private static bool isInit = false;
-
-        private static PlayerInputSystem inputAction;       //Action Controller
+     //Action Controller
         public static bool inMenu;                          //Booleana per sapere quando abilitare i controlli menu e quando quelli giocatore
 
 
@@ -26,11 +24,12 @@ namespace AntoNamespace
         public static Vector3 inputVector;              //Un vettore "lavorato", adattato al 3D e ad una camera angolata
         public static float inputMagnitude;
 
-
         //VARIABILI MOUSE
         public static Vector2 mouseScreenPosition;
 
-
+        //VARAIBILE PER IL CHECK DELLE INTERAZIONI
+        //durante le interazioni il giocatore non deve potersi muovere
+        public static bool isInteracting;
 
         //Azioni che vengono triggerate in caso di pressione di tasti
         //Altri moduli possono accedervi senza avere un riferimento alla classe
@@ -40,13 +39,16 @@ namespace AntoNamespace
         public static event Action<InputAction.CallbackContext> OnPreviousWeaponAction;
         public static event Action<InputAction.CallbackContext> OnSpecificWeaponAction;
 
+        #region PRIVATE
+
+        private static bool isInit = false;
+        private static PlayerInputSystem inputAction;  
+
+        #endregion
         
         
         
-        
-        //VARAIBILE PER IL CHECK DELLE INTERAZIONI
-        //durante le interazioni il giocatore non deve potersi muovere
-        public static bool isInteracting;
+
 
 
         public static void Init()
@@ -125,6 +127,7 @@ namespace AntoNamespace
 
         static void OnMoveInput(InputAction.CallbackContext context)
         {
+
             rawInputVector = context.ReadValue<Vector2>();
             inputVector = AdaptInputDirection(cameraDegreesAngle: 45);
 

@@ -11,7 +11,7 @@ namespace AntoNamespace
     {
 
         private PlayerInventoryHandler playerInventoryHandler;
-
+        
         private Vector3 mouseWorldPosition;
         private Plane aimPlane = new Plane(Vector3.down, 0);
 
