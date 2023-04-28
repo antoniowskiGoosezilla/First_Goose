@@ -6,13 +6,11 @@ using UnityEngine.InputSystem;
 
 namespace AntoNamespace
 {
-    public static class InputSystem
+    public static class InputCustomSystem
     {
         //Singleton
         //private static InputManager instance;
-     //Action Controller
-        public static bool inMenu;                          //Booleana per sapere quando abilitare i controlli menu e quando quelli giocatore
-
+        public static bool inMenu;                       //Booleana per sapere quando abilitare i controlli menu e quando quelli giocatore
 
         //VARIABILI PER IL MOVIMENTO
         //Sono statiche poiché il giocatore è unico e quindi non c'è bisogno
@@ -40,10 +38,8 @@ namespace AntoNamespace
         public static event Action<InputAction.CallbackContext> OnSpecificWeaponAction;
 
         #region PRIVATE
-
         private static bool isInit = false;
         private static PlayerInputSystem inputAction;  
-
         #endregion
         
         
@@ -77,6 +73,7 @@ namespace AntoNamespace
             SetUpChangeWeaponInput();
 
             inputAction.Pause.Button.performed += OnPauseToggle;
+            InputSystem.onDeviceChange += OnControllerChange; //PEr il controllo dei device 
             inputAction.Pause.Enable();
             //Da cambiare con lo specifico schema di comandi necessario all'avvio
             inputAction.Game.Enable();
@@ -159,7 +156,28 @@ namespace AntoNamespace
             }
                 
     }
-
+        static void OnControllerChange(InputDevice device, InputDeviceChange change)
+        {
+            switch (change)
+            {
+                case InputDeviceChange.Added:
+                    OnConnectController();
+                    break;
+                case InputDeviceChange.Removed:
+                    OnDisconnectController();
+                    break;
+                default:
+                    break;
+            }
+        }
+        static void OnConnectController()
+        {
+            Debug.Log("Controller Connesso");
+        }   
+        static void OnDisconnectController()
+        {
+            Debug.Log("Controller Disconnesso");
+        }
         //Ruota gli input del controller in modo che siano adattati alla visuale
         //di gioco
         static Vector3 AdaptInputDirection(float cameraDegreesAngle)

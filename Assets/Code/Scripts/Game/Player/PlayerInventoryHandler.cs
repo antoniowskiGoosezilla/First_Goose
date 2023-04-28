@@ -12,8 +12,8 @@ public class PlayerInventoryHandler : MonoBehaviour
 
     void Awake()
     {
-        AntoNamespace.InputSystem.OnNextWeaponAction += GetNextWeapon;
-        AntoNamespace.InputSystem.OnPreviousWeaponAction += GetPreviousWeapon;
+        AntoNamespace.InputCustomSystem.OnNextWeaponAction += GetNextWeapon;
+        AntoNamespace.InputCustomSystem.OnPreviousWeaponAction += GetPreviousWeapon;
     }
     void Start()
     {

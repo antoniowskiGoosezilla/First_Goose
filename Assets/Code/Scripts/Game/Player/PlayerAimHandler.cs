@@ -31,7 +31,7 @@ namespace AntoNamespace
         {
             playerInventoryHandler = GetComponent<PlayerInventoryHandler>();
 
-            InputSystem.OnShootAction += Shoot;
+            InputCustomSystem.OnShootAction += Shoot;
         }
 
         void Update()
@@ -41,12 +41,12 @@ namespace AntoNamespace
 
         void UpdateMouseWorldPosition()
         {
-            if(oldMousePosition == AntoNamespace.InputSystem.mouseScreenPosition)
+            if(oldMousePosition == AntoNamespace.InputCustomSystem.mouseScreenPosition)
                 return;
 
-            oldMousePosition = AntoNamespace.InputSystem.mouseScreenPosition;
+            oldMousePosition = AntoNamespace.InputCustomSystem.mouseScreenPosition;
             
-            Ray ray = Camera.main.ScreenPointToRay(AntoNamespace.InputSystem.mouseScreenPosition);
+            Ray ray = Camera.main.ScreenPointToRay(AntoNamespace.InputCustomSystem.mouseScreenPosition);
             if(aimPlane.Raycast(ray, out float distance))
             {
                 mouseWorldPosition = ray.GetPoint(distance);

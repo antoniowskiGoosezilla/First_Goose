@@ -89,7 +89,7 @@ namespace AntoNamespace
                 //Inizializziamo il sistema di localizzazione.
                 //Vengono creati i Dizionari con le stringhe tradotte ed impostata la lingua
                 LocalizationSystem.Init();
-                InputSystem.Init();
+                InputCustomSystem.Init();
 
                 //Aggiungo la funzione di update all'evento.
                 //Ogni volta che l'evento viene triggerato, anche la funzione di update

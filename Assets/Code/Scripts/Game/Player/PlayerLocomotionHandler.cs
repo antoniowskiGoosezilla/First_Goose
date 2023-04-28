@@ -48,19 +48,19 @@ namespace AntoNamespace
         void Init()
         {
             characterController = GetComponent<CharacterController>();
-            InputSystem.OnRollAction += TriggerRoll;
+            InputCustomSystem.OnRollAction += TriggerRoll;
         }
 
         #region MOVEMENT FUNCTIONS
         void MovePlayer(float delta)
         {
-            if(InputSystem.isInteracting)
+            if(InputCustomSystem.isInteracting)
                 return;
 
-            if(InputSystem.inputMagnitude != 0)
+            if(InputCustomSystem.inputMagnitude != 0)
             {
                 movementTimer += delta;
-                velocity = new Vector2(InputSystem.horizontal, InputSystem.vertical)*speedCurve.Evaluate(movementTimer);
+                velocity = new Vector2(InputCustomSystem.horizontal, InputCustomSystem.vertical)*speedCurve.Evaluate(movementTimer);
                 HandlePlayerOrientation(delta);
             }
             else
@@ -74,7 +74,7 @@ namespace AntoNamespace
         }
         void HandlePlayerOrientation(float delta)
         {
-            Quaternion toRotation = Quaternion.LookRotation(new Vector3(InputSystem.horizontal, 0, InputSystem.vertical), Vector3.up);
+            Quaternion toRotation = Quaternion.LookRotation(new Vector3(InputCustomSystem.horizontal, 0, InputCustomSystem.vertical), Vector3.up);
             transform.rotation = Quaternion.Slerp(transform.rotation, toRotation, 15f*delta);
         }
         #endregion
@@ -82,18 +82,18 @@ namespace AntoNamespace
         #region ROLL
         void TriggerRoll(InputAction.CallbackContext context)
         {
-            if(InputSystem.isInteracting)
+            if(InputCustomSystem.isInteracting)
                 return;
             StartCoroutine(Roll());
         }
 
         IEnumerator Roll(){
             //animatorHandler.PlayAnimationTarget("RollForward", true);
-            InputSystem.isInteracting = true;
+            InputCustomSystem.isInteracting = true;
             float timer = 0.8f;                 //DURATA POCO PIU PICCOLA DELL'ANIMAZIONE ANIMAZIONE
             float rollTime = 0f;
             float rollSpeed = rollSpeedCurve.Evaluate(rollTime);
-            Vector3 lookDirection = new Vector3(InputSystem.horizontal, 0, InputSystem.vertical);
+            Vector3 lookDirection = new Vector3(InputCustomSystem.horizontal, 0, InputCustomSystem.vertical);
 
             while(timer > 0){
                 //Dodge direction
@@ -104,10 +104,10 @@ namespace AntoNamespace
                 rollTime += Time.deltaTime;
                 rollSpeed = rollSpeedCurve.Evaluate(rollTime);
                 characterController.Move(new Vector3(lookDirection.x, 0, lookDirection.z)*Time.deltaTime*rollSpeed);
-                //animatorHandler.UpdateAnimatorMovementValues(0,0,InputSystem.runFlag);
+                //animatorHandler.UpdateAnimatorMovementValues(0,0,InputCustomSystem.runFlag);
                 yield return null;
             }       
-            InputSystem.isInteracting = false;
+            InputCustomSystem.isInteracting = false;
         }
         #endregion
 

@@ -14,7 +14,7 @@ namespace AntoNamespace
         {
             SettingsSystem.Init();
             LocalizationSystem.Init();
-            InputSystem.Init();
+            InputCustomSystem.Init();
         }
     }
 }
