@@ -29,7 +29,6 @@ namespace AntoNamespace
         //Componenti necessari
         private CharacterController characterController;
         private PlayerStatsHandler playerStatsHandler;
-
         //Elementi utili per il movimento
         private float movementTimer;
         private Vector2 velocity;

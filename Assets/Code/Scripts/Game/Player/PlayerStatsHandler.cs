@@ -6,7 +6,7 @@ namespace AntoNamespace{
     public class PlayerStatsHandler : CharacterStats
     {
         //PUBLIC O ACCESSIBILI DALL'EDITOR
-        public int availableActionStacks {get; private set;}   //Variabile accessibile dagli altri moduli
+        public int availableActionStacks {get; private set;}    //Variabile accessibile dagli altri moduli
                                                                 //per verificare la presenza di AS.
                                                                 //Considerare un possibile "semaforo" per l'accesso
         
@@ -20,9 +20,9 @@ namespace AntoNamespace{
             availableActionStacks = maxActionStacks;
         }
 
-        public void SetAvailableActionStacks(int newValue)
-        {
-            availableActionStacks = newValue;
+        public void SetAvailableActionStacks(int newValue)          //Funzione utile per settare sia
+        {                                                           //nuovi valori che per eseguire operazioni
+            availableActionStacks = newValue;                       //come sottrazioni o addizioni di stacks
 
             if(availableActionStacks > maxActionStacks)
                 SetAvailableActionStacksToMaxValue();
@@ -33,11 +33,13 @@ namespace AntoNamespace{
             //Iniziamo il cooldown delle stack
             if(availableActionStacks == 0)
             {
-                StartCoroutine("StartActionStacksCooldown");
+                StopAllStackCooldowns();
+                StartCoroutine("StartMaxActionStackCooldown");
             }
             else
-            {
-                StartCoroutine("StartMaxActionStackCooldown");
+            {   
+                Coroutine coroutine = StartCoroutine("StartActionStacksCooldown");
+                stackCoroutine.Add(coroutine);
             }
         }
         
@@ -46,14 +48,16 @@ namespace AntoNamespace{
 
 
         //PRIVATE
+        private List<Coroutine> stackCoroutine;
         private int maxActionStacks = 5;
-        private float actionStacksCooldown = 2;
+        private float actionStacksCooldown = 3;
         private bool inCooldown;
 
         // Start is called before the first frame update
         void Start()
         {
-            
+            availableActionStacks = maxActionStacks;
+            stackCoroutine = new List<Coroutine>();
         }
 
         // Update is called once per frame
@@ -64,8 +68,20 @@ namespace AntoNamespace{
 
         private IEnumerator StartActionStacksCooldown()
         {
+            if(inCooldown)
+                yield break;
+
+            inCooldown = true;
             yield return new WaitForSeconds(actionStacksCooldown);
             SetAvailableActionStacks(availableActionStacks + 1);
+            inCooldown = false;
+
+            if(availableActionStacks != maxActionStacks)
+            {
+                Coroutine coroutine = StartCoroutine(StartActionStacksCooldown());
+                stackCoroutine.Add(coroutine);
+            }
+                
         }
 
         private IEnumerator StartMaxActionStackCooldown()
@@ -74,6 +90,16 @@ namespace AntoNamespace{
             SetAvailableActionStacksToMaxValue();
         }
 
+        private void StopAllStackCooldowns()
+        {
+            foreach (Coroutine coroutine in stackCoroutine)
+            {
+                if(coroutine != null)
+                    StopCoroutine(coroutine);
+            }
+
+            stackCoroutine.Clear();
+        }
 
     }
 }
