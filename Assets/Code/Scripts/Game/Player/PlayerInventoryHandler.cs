@@ -5,8 +5,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerInventoryHandler : MonoBehaviour
 {
-    [SerializeField]
-    private Inventory inventory;
+    [SerializeField] Inventory inventory;
     public GameObject equippedWeapon;
     public string equippedObject; //Creare tipo Oggetto
 

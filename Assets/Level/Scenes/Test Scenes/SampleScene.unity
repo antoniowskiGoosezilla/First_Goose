@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 43717490}
   - component: {fileID: 43717489}
   - component: {fileID: 43717487}
+  - component: {fileID: 43717495}
   - component: {fileID: 43717493}
   - component: {fileID: 43717494}
   m_Layer: 6
@@ -205,6 +206,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rollActionStackCost: 1
 --- !u!143 &43717489
 CharacterController:
   m_ObjectHideFlags: 0
@@ -327,6 +329,20 @@ MonoBehaviour:
     cassette: []
   equippedWeapon: {fileID: 0}
   equippedObject: 
+--- !u!114 &43717495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 43717486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afbfebb4f7b78e64896813e65831a66a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  availableActionStacks: 5
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,22 +11,29 @@ namespace AntoNamespace
 {
     public class PlayerLocomotionHandler : MonoBehaviour
     {
-
-        //Components
-        CharacterController characterController;
-        
+        //PUBLIC O ACCESSIBILI DALL'EDITOR
         //Movement
         [SerializeField] AnimationCurve speedCurve;             //Al posto di classiche variabili, per il movimento sono state utilizzate
                                                                 //delle AnimationCurve. La velocità viene definita in funzione del tempo 
                                                                 //di movimento. In questo modo possiamo definire in modo semplice un tipo
                                                                 //di velocità direttamente dall'Inspector di Unity
-        float movementTimer;
-        Vector2 velocity;
-        float verticalVelocity;
-        
-        //Roll
+        [Header("ROLL")]
         [SerializeField] AnimationCurve rollSpeedCurve;         //Il roll ha subito lo stesso trattamento della velocità di movimento
-        
+        [SerializeField] int rollActionStackCost;
+
+
+
+
+
+        //PRIVATE
+        //Componenti necessari
+        private CharacterController characterController;
+        private PlayerStatsHandler playerStatsHandler;
+
+        //Elementi utili per il movimento
+        private float movementTimer;
+        private Vector2 velocity;
+        private float verticalVelocity;
 
         void Awake()
         {
@@ -47,6 +54,9 @@ namespace AntoNamespace
         void Init()
         {
             characterController = GetComponent<CharacterController>();
+            playerStatsHandler = GetComponent<PlayerStatsHandler>();
+
+            //Associamo al pulsante di roll l'azione da eseguire
             InputCustomSystem.OnRollAction += TriggerRoll;
         }
 
@@ -83,6 +93,11 @@ namespace AntoNamespace
         {
             if(InputCustomSystem.isInteracting)
                 return;
+            
+            if(playerStatsHandler.availableActionStacks <= 0)
+                return;
+            
+            playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - rollActionStackCost);
             StartCoroutine(Roll());
         }
 
