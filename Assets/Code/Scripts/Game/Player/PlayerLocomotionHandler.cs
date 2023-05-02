@@ -14,8 +14,7 @@ namespace AntoNamespace
 
         //Components
         CharacterController characterController;
-
-
+        
         //Movement
         [SerializeField] AnimationCurve speedCurve;             //Al posto di classiche variabili, per il movimento sono state utilizzate
                                                                 //delle AnimationCurve. La velocità viene definita in funzione del tempo 
