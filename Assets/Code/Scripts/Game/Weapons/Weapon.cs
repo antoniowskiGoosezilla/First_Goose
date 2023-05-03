@@ -15,10 +15,10 @@ public abstract class Weapon : MonoBehaviour, IEquippable
 
     public string weaponName;
     public string weaponBrand;
+
     //STATS
     public float damage;
     public float range;
-
     [Range(0,1)]
     public float precision;
     
@@ -26,11 +26,16 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public bool inCooldown;
     public int mainShotCost = 1;
     public int alternativeShotCost;
+
     public float magAmmo;
     public float totalAmmo;
+
     public WeaponType type;
     public int rarity;
 
+    [Header("Suoni")]
+    [SerializeField] protected AudioClip mainShotSound;
+    [SerializeField] protected AudioClip alternativeShotSound;
     
     protected static LayerMask layerMaskToCheck = 0x6;
 
@@ -52,5 +57,11 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public void TickShockDamage()
     {
         
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        float pitch = Random.Range(0.5f, 2f);
+        AudioSource.PlayClipAtPoint(clip, transform.position, 1f);
     }
 }

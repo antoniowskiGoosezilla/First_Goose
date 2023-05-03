@@ -6,8 +6,11 @@ public class Pistol : Weapon
 {
     public override void Shoot()
     {
-        Debug.Log("Pistol Shoot");
+        if(mainShotSound != null)
+            PlaySound(mainShotSound);
         
+        magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
+
         //Generiamo un raggio per vedere se il proiettile colpisce il nemico
         Ray shot = new Ray(transform.position, transform.forward);
         RaycastHit hit;

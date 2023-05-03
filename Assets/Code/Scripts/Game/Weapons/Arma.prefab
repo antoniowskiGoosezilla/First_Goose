@@ -51,10 +51,15 @@ MonoBehaviour:
   range: 5
   precision: 0.9
   shotCooldown: 1
+  inCooldown: 0
+  mainShotCost: 1
+  alternativeShotCost: 0
   magAmmo: 6
   totalAmmo: 60
   type: 0
   rarity: 2
+  mainShotSound: {fileID: 8300000, guid: 2edfae1375f084df4b61a0ad70c30fb5, type: 3}
+  alternativeShotSound: {fileID: 0}
 --- !u!1 &1260754746584667694
 GameObject:
   m_ObjectHideFlags: 0

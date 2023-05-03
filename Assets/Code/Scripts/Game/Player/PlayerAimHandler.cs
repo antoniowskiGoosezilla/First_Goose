@@ -61,6 +61,10 @@ namespace AntoNamespace
         //Considerare la possibilità di spostare queste funzioni nella classe delle armi
         void Shoot(InputAction.CallbackContext context)
         {
+
+            if(playerStatsHandler.availableActionStacks <= 0)
+                return;
+
             Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
             if(usedWeapon.inCooldown)
                 return;
@@ -68,6 +72,13 @@ namespace AntoNamespace
             //Ruotiamo il modello nella direzione dello sparo
             transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
             
+            if(usedWeapon.magAmmo == 0)
+            {
+                //Aggiungere suono caricatore scarico
+                Debug.Log("Caricatore scarico");
+                return;
+            }
+
             playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
             usedWeapon.Shoot();
         }
