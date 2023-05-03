@@ -24,6 +24,8 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     
     public float shotCooldown;              //Serve per definire il rateo di fuoco
     public bool inCooldown;
+    public int mainShotCost = 1;
+    public int alternativeShotCost;
     public float magAmmo;
     public float totalAmmo;
     public WeaponType type;
