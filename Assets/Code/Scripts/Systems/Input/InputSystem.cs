@@ -36,6 +36,7 @@ namespace AntoNamespace
         public static event Action<InputAction.CallbackContext> OnNextWeaponAction;
         public static event Action<InputAction.CallbackContext> OnPreviousWeaponAction;
         public static event Action<InputAction.CallbackContext> OnSpecificWeaponAction;
+        public static event Action<InputAction.CallbackContext> OnReloadAction;
 
         #region PRIVATE
         private static bool isInit = false;
@@ -114,6 +115,7 @@ namespace AntoNamespace
         static void SetUpShootInput()
         {
             inputAction.Game.Shoot.performed += OnShootAction;
+            inputAction.Game.Reload.performed += OnReloadAction;
         }
         static void SetUpChangeWeaponInput()
         {

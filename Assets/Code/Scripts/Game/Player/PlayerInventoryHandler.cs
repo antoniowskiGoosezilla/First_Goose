@@ -2,17 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using AntoNamespace;
 
 public class PlayerInventoryHandler : MonoBehaviour
 {
     [SerializeField] Inventory inventory;
+
     public GameObject equippedWeapon;
     public string equippedObject; //Creare tipo Oggetto
 
     void Awake()
     {
-        AntoNamespace.InputCustomSystem.OnNextWeaponAction += GetNextWeapon;
-        AntoNamespace.InputCustomSystem.OnPreviousWeaponAction += GetPreviousWeapon;
+        InputCustomSystem.OnNextWeaponAction += GetNextWeapon;
+        InputCustomSystem.OnPreviousWeaponAction += GetPreviousWeapon;
+        InputCustomSystem.OnReloadAction += Reload;
     }
     void Start()
     {
@@ -72,4 +75,12 @@ public class PlayerInventoryHandler : MonoBehaviour
     {
         Destroy(equippedWeapon);
     }
+    private void Reload(InputAction.CallbackContext context)
+    {
+        Weapon usedWeapon = equippedWeapon.GetComponent<Weapon>();
+        if(usedWeapon == null)
+            return;
+        StartCoroutine(usedWeapon.Reload());
+    }
+    
 }

@@ -21,6 +21,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public float range;
     [Range(0,1)]
     public float precision;
+    public float reloadTime;
     
     public float shotCooldown;              //Serve per definire il rateo di fuoco
     public bool inCooldown;
@@ -28,7 +29,9 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public int alternativeShotCost;
 
     public float magAmmo;
+    public float maxMagAmmo;
     public float totalAmmo;
+    public float maxTotalAmmo;
 
     public WeaponType type;
     public int rarity;
@@ -41,8 +44,23 @@ public abstract class Weapon : MonoBehaviour, IEquippable
 
     public abstract void Shoot();
     public abstract void AlternativeShoot();
-
     public abstract void Equip();
+    public IEnumerator Reload()
+    {
+        if(magAmmo == maxMagAmmo)                       //Non deve caricare se il caricatore è pieno
+            yield break;
+
+        if(totalAmmo <= 0)                              //Non hai altre munizioni a disposizione
+            yield break;
+        
+        yield return new WaitForSeconds(reloadTime);
+
+        if(totalAmmo >= maxMagAmmo)
+            magAmmo = maxMagAmmo;
+        else
+            magAmmo = totalAmmo;
+        //Aggiungere suono
+    }
 
     public void TickFireDamage()
     {

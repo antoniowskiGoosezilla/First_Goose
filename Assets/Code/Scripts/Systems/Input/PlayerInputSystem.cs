@@ -98,6 +98,15 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Reload"",
+                    ""type"": ""Button"",
+                    ""id"": ""aa74faf4-6043-47c6-8957-5795629b1a41"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -518,6 +527,17 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""action"": ""SpecificWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""340d4b61-775c-45b2-a89f-42c51c591150"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -711,6 +731,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         m_Game_NextWeapon = m_Game.FindAction("NextWeapon", throwIfNotFound: true);
         m_Game_PreviousWeapon = m_Game.FindAction("PreviousWeapon", throwIfNotFound: true);
         m_Game_SpecificWeapon = m_Game.FindAction("SpecificWeapon", throwIfNotFound: true);
+        m_Game_Reload = m_Game.FindAction("Reload", throwIfNotFound: true);
         // Pause
         m_Pause = asset.FindActionMap("Pause", throwIfNotFound: true);
         m_Pause_Button = m_Pause.FindAction("Button", throwIfNotFound: true);
@@ -784,6 +805,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_NextWeapon;
     private readonly InputAction m_Game_PreviousWeapon;
     private readonly InputAction m_Game_SpecificWeapon;
+    private readonly InputAction m_Game_Reload;
     public struct GameActions
     {
         private @PlayerInputSystem m_Wrapper;
@@ -796,6 +818,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         public InputAction @NextWeapon => m_Wrapper.m_Game_NextWeapon;
         public InputAction @PreviousWeapon => m_Wrapper.m_Game_PreviousWeapon;
         public InputAction @SpecificWeapon => m_Wrapper.m_Game_SpecificWeapon;
+        public InputAction @Reload => m_Wrapper.m_Game_Reload;
         public InputActionMap Get() { return m_Wrapper.m_Game; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -829,6 +852,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                 @SpecificWeapon.started -= m_Wrapper.m_GameActionsCallbackInterface.OnSpecificWeapon;
                 @SpecificWeapon.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnSpecificWeapon;
                 @SpecificWeapon.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnSpecificWeapon;
+                @Reload.started -= m_Wrapper.m_GameActionsCallbackInterface.OnReload;
+                @Reload.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnReload;
+                @Reload.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnReload;
             }
             m_Wrapper.m_GameActionsCallbackInterface = instance;
             if (instance != null)
@@ -857,6 +883,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                 @SpecificWeapon.started += instance.OnSpecificWeapon;
                 @SpecificWeapon.performed += instance.OnSpecificWeapon;
                 @SpecificWeapon.canceled += instance.OnSpecificWeapon;
+                @Reload.started += instance.OnReload;
+                @Reload.performed += instance.OnReload;
+                @Reload.canceled += instance.OnReload;
             }
         }
     }
@@ -937,6 +966,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         void OnNextWeapon(InputAction.CallbackContext context);
         void OnPreviousWeapon(InputAction.CallbackContext context);
         void OnSpecificWeapon(InputAction.CallbackContext context);
+        void OnReload(InputAction.CallbackContext context);
     }
     public interface IPauseActions
     {

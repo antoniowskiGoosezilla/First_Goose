@@ -50,12 +50,15 @@ MonoBehaviour:
   damage: 1
   range: 5
   precision: 0.9
+  reloadTime: 0
   shotCooldown: 1
   inCooldown: 0
   mainShotCost: 1
   alternativeShotCost: 0
   magAmmo: 6
+  maxMagAmmo: 6
   totalAmmo: 60
+  maxTotalAmmo: 180
   type: 0
   rarity: 2
   mainShotSound: {fileID: 8300000, guid: 2edfae1375f084df4b61a0ad70c30fb5, type: 3}
