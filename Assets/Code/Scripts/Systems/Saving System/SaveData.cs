@@ -6,4 +6,6 @@ using UnityEngine;
 public class SaveData
 {
     //Aggiungere i dati da salvare qui
+    public int week;
+    public int saloonCoin;
 }

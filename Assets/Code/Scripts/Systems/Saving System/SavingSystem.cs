@@ -30,6 +30,19 @@ public static class SavingSystem
         stream.Close();
     }
 
+    public static void Save(SaveData savedData)
+    {
+        //Creaimao il formatter per la transformazione dei dati in binario
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream stream = new FileStream(path, FileMode.Create);
+
+        //trasformiamo il salvataggio in binario
+        formatter.Serialize(stream, savedData);
+        
+        //chiudiamo lo stream di file
+        stream.Close();
+    }
+
     public static SaveData Load()
     {
 

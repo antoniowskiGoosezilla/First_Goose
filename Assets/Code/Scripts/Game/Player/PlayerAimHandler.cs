@@ -54,6 +54,7 @@ namespace AntoNamespace
             }
 
             //Fatti i calcoli, dobbiamo solo girare il giocatore verso il punto desiderato
+            //transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
         }
 
 

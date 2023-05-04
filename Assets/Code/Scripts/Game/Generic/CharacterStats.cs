@@ -5,9 +5,9 @@ using UnityEngine;
 public abstract class CharacterStats : MonoBehaviour, IDamageble
 {
     public float health;
-    private float maxHealth;
-    private float movementSpeed;
-    private float attack;
+    protected float maxHealth;
+    protected float movementSpeed;
+    protected float attack;
 
 
 
