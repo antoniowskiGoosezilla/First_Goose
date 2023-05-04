@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public class Charger : Weapon
 {
-    public override void Shoot()
+    public override bool Shoot()
     {
         throw new System.NotImplementedException();
     }

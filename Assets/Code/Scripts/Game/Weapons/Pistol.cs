@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    public override void Shoot()
+    public override bool Shoot()
     {
         if(mainShotSound != null)
             PlaySound(mainShotSound);
@@ -21,7 +21,9 @@ public class Pistol : Weapon
         {
             Debug.Log("Colpito");
         }
+        
         StartCoroutine(StartShootingCooldown());
+        return isHit;
     }
 
     public override void AlternativeShoot()

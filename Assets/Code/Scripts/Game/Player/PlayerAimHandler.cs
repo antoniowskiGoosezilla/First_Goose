@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 
 namespace AntoNamespace
 {    
+    [RequireComponent(typeof(ComboHandler))]
+    [RequireComponent(typeof(PlayerInventoryHandler))]
+    [RequireComponent(typeof(PlayerStatsHandler))]
     //Classe che gestisce sia la mira che lo shooting del giocatore
     public class PlayerAimHandler : MonoBehaviour
     {
@@ -17,6 +20,7 @@ namespace AntoNamespace
         //PRIVATE 
         private PlayerInventoryHandler playerInventoryHandler;
         private PlayerStatsHandler playerStatsHandler;
+        private ComboHandler comboHandler;
         
         private Vector3 mouseWorldPosition;
         private Plane aimPlane = new Plane(Vector3.down, 0);
@@ -31,6 +35,7 @@ namespace AntoNamespace
         {
             playerInventoryHandler = GetComponent<PlayerInventoryHandler>();
             playerStatsHandler = GetComponent<PlayerStatsHandler>();
+            comboHandler = GetComponent<ComboHandler>();
 
             InputCustomSystem.OnShootAction += Shoot;
         }
@@ -81,7 +86,10 @@ namespace AntoNamespace
             }
 
             playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
-            usedWeapon.Shoot();
+            bool shotResult = usedWeapon.Shoot();
+
+            if(shotResult)                  //Se colpiamo un avversario, aggiungiamo i punti;
+                comboHandler.AddPoints(100);
         }
     }
 }

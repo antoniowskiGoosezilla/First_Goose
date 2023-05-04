@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class Rifle : Weapon
 {
-    public override void Shoot()
+    public override bool Shoot()
     {
-
+        throw new System.NotImplementedException();
     }
 
     public override void AlternativeShoot()

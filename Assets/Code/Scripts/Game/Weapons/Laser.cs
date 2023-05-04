@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Laser : Weapon
 {
-    public override void Shoot()
+    public override bool Shoot()
     {
         throw new System.NotImplementedException();
     }

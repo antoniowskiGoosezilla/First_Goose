@@ -40,9 +40,9 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     [SerializeField] protected AudioClip mainShotSound;
     [SerializeField] protected AudioClip alternativeShotSound;
     
-    protected static LayerMask layerMaskToCheck = 0x6;
+    protected static LayerMask layerMaskToCheck = 0x64;
 
-    public abstract void Shoot();
+    public abstract bool Shoot();
     public abstract void AlternativeShoot();
     public abstract void Equip();
     public IEnumerator Reload()

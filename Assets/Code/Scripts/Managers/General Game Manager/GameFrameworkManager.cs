@@ -13,6 +13,8 @@ public class GameFrameworkManager : MonoBehaviour
 
     public static event Action<GameObject> OnCharacterChange;
 
+
+    
     public void AddSaloonCoins(int value)
     {
         saloonCoin += value;
@@ -24,6 +26,9 @@ public class GameFrameworkManager : MonoBehaviour
         if(saloonCoin < 0)                      //Non DEVE accadere
             saloonCoin = 0;
     }
+
+
+
 
     //PRIVATE
     private GameFrameworkManager instance;

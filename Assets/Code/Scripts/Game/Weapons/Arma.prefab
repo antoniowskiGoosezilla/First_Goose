@@ -51,7 +51,7 @@ MonoBehaviour:
   range: 5
   precision: 0.9
   reloadTime: 0
-  shotCooldown: 1
+  shotCooldown: 0
   inCooldown: 0
   mainShotCost: 1
   alternativeShotCost: 0
