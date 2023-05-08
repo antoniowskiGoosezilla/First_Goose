@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 namespace AntoNamespace{    
     public class PlayerStatsHandler : CharacterStats
     {
         //PUBLIC O ACCESSIBILI DALL'EDITOR
-        public int availableActionStacks {get; private set;}    //Variabile accessibile dagli altri moduli
+        public int availableActionStacks; /*{get; private set;}*/    //Variabile accessibile dagli altri moduli
                                                                 //per verificare la presenza di AS.
                                                                 //Considerare un possibile "semaforo" per l'accesso
         
+
+        public UnityEvent OnEndStacks;
+
+
         public void SetMaxActionStacks(int newValue)
         {
             maxActionStacks = newValue;
@@ -34,6 +40,7 @@ namespace AntoNamespace{
             if(availableActionStacks == 0)
             {
                 StopAllStackCooldowns();
+                OnEndStacks.Invoke();
                 StartCoroutine("StartMaxActionStackCooldown");
             }
             else

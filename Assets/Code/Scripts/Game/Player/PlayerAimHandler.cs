@@ -85,11 +85,12 @@ namespace AntoNamespace
                 return;
             }
 
-            playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
+            
             bool shotResult = usedWeapon.Shoot();
-
             if(shotResult)                  //Se colpiamo un avversario, aggiungiamo i punti;
                 comboHandler.AddPoints(100);
+            
+            playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
         }
     }
 }

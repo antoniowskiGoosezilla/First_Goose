@@ -35,6 +35,12 @@ namespace AntoNamespace
                 StartCoroutine("StartComboCooldown");
         }
 
+        public void EndCombo()
+        {
+            StopCoroutine(StartComboCooldown());
+            ResetCombo();
+        }
+
 
 
 
@@ -88,8 +94,9 @@ namespace AntoNamespace
 
         private void ResetCombo()
         {
-            globalComboPoints = comboPoints*0.07f;              //7%
+            globalComboPoints += comboPoints*0.07f;              //7%
 
+            comboTimer = 0;
             comboPoints = 0;
             comboGrade = ComboGrade.None;
             comboStarted = false;
@@ -106,9 +113,6 @@ namespace AntoNamespace
 
             ResetCombo();
         }
-
-
-
 
     }
 }
