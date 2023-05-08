@@ -12,7 +12,8 @@ namespace AntoNamespace{
                                                                 //per verificare la presenza di AS.
                                                                 //Considerare un possibile "semaforo" per l'accesso
         
-
+        [Space]
+        [Header("EVENTI")]
         public UnityEvent OnEndStacks;
 
 

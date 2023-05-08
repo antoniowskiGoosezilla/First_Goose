@@ -41,6 +41,11 @@ namespace AntoNamespace
             ResetCombo();
         }
 
+        public void SetNewTotalPointPercentage(float percetage)
+        {
+            percentageTotalPointGain = percetage;
+        }
+
 
 
 
@@ -49,6 +54,8 @@ namespace AntoNamespace
         private bool comboStarted = false;
         private float comboTimer;
         private float comboInterval = 10;
+
+        private float percentageTotalPointGain = 0.07f;
 
         private void Awake()
         {
@@ -94,7 +101,7 @@ namespace AntoNamespace
 
         private void ResetCombo()
         {
-            globalComboPoints += comboPoints*0.07f;              //7%
+            globalComboPoints += comboPoints*percentageTotalPointGain;              //7%
 
             comboTimer = 0;
             comboPoints = 0;
