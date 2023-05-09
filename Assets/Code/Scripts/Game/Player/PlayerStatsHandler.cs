@@ -15,6 +15,9 @@ namespace AntoNamespace{
         [Space]
         [Header("EVENTI")]
         public UnityEvent OnEndStacks;
+        
+        public static event Action<int, bool> OnUpdateStacks;
+        public static event Action<int, float> OnUpdateCooldown;
 
 
         public void SetMaxActionStacks(int newValue)
@@ -27,13 +30,35 @@ namespace AntoNamespace{
             availableActionStacks = maxActionStacks;
         }
 
-        public void SetAvailableActionStacks(int newValue)          //Funzione utile per settare sia
+        public void SetAvailableActionStacks(int newValue)          //(DEPRECATED)Funzione utile per settare sia
         {                                                           //nuovi valori che per eseguire operazioni
             availableActionStacks = newValue;                       //come sottrazioni o addizioni di stacks
 
             if(availableActionStacks > maxActionStacks)
                 SetAvailableActionStacksToMaxValue();
             
+            if(availableActionStacks < 0)
+                availableActionStacks = 0;
+
+            //Iniziamo il cooldown delle stack
+            if(availableActionStacks == 0)
+            {
+                StopAllStackCooldowns();
+                OnEndStacks.Invoke();
+                StartCoroutine("StartMaxActionStackCooldown");
+            }
+            else
+            {   
+                Coroutine coroutine = StartCoroutine("StartActionStacksCooldown");
+                stackCoroutine.Add(coroutine);
+            }
+        }
+
+        public void RemoveActionStacks(int valueToRemove)
+        {
+            OnUpdateStacks?.Invoke(availableActionStacks, false);
+            availableActionStacks -= valueToRemove;
+
             if(availableActionStacks < 0)
                 availableActionStacks = 0;
 
@@ -80,8 +105,16 @@ namespace AntoNamespace{
                 yield break;
 
             inCooldown = true;
-            yield return new WaitForSeconds(actionStacksCooldown);
+            float timer = 0;
+            //yield return new WaitForSeconds(actionStacksCooldown);
+            while(timer < actionStacksCooldown)
+            {
+                timer += Time.deltaTime;
+                OnUpdateCooldown?.Invoke(availableActionStacks+1,timer/actionStacksCooldown);
+                yield return null;
+            }
             SetAvailableActionStacks(availableActionStacks + 1);
+            OnUpdateStacks?.Invoke(availableActionStacks, true);
             inCooldown = false;
 
             if(availableActionStacks != maxActionStacks)
@@ -94,8 +127,10 @@ namespace AntoNamespace{
 
         private IEnumerator StartMaxActionStackCooldown()
         {
+            OnUpdateStacks?.Invoke(-1, false);
             yield return new WaitForSeconds(actionStacksCooldown + 1);
             SetAvailableActionStacksToMaxValue();
+            OnUpdateStacks?.Invoke(-1, true);
         }
 
         private void StopAllStackCooldowns()

@@ -67,11 +67,16 @@ namespace AntoNamespace
         //Considerare la possibilità di spostare queste funzioni nella classe delle armi
         void Shoot(InputAction.CallbackContext context)
         {
-
+            Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
+            if(usedWeapon == null)
+                return;
+            
             if(playerStatsHandler.availableActionStacks <= 0)
                 return;
-
-            Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
+            
+            if(usedWeapon.mainShotCost > playerStatsHandler.availableActionStacks)
+                return;
+                
             if(usedWeapon.inCooldown)
                 return;
 
@@ -90,7 +95,8 @@ namespace AntoNamespace
             if(shotResult)                  //Se colpiamo un avversario, aggiungiamo i punti;
                 comboHandler.AddPoints(100);
             
-            playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
+            //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
+            playerStatsHandler.RemoveActionStacks(usedWeapon.mainShotCost);
         }
     }
 }

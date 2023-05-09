@@ -95,8 +95,12 @@ namespace AntoNamespace
             
             if(playerStatsHandler.availableActionStacks <= 0)
                 return;
+
+            if(rollActionStackCost > playerStatsHandler.availableActionStacks)
+                return;
             
-            playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - rollActionStackCost);
+            //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - rollActionStackCost);
+            playerStatsHandler.RemoveActionStacks(rollActionStackCost);
             StartCoroutine(Roll());
         }
 
