@@ -8,6 +8,14 @@ namespace AntoNamespace
 {
     public static class InputCustomSystem
     {
+        public enum ControllerType
+        {
+            KEYBOARD,
+            XBOX_CONTROLLER,
+            PLAYSTATION_CONTROLLER
+        }
+        
+        public static ControllerType controllerType;
         //Singleton
         //private static InputManager instance;
         public static bool inMenu;                       //Booleana per sapere quando abilitare i controlli menu e quando quelli giocatore

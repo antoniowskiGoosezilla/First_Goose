@@ -62,6 +62,8 @@ public class PlayerInventoryHandler : MonoBehaviour
 
     //PRIVATE
 
+    private ReloadCanvasHandler reloadCanvas;
+
     private bool isReloading;
     private float deltaReloading = 0.3f;
     private float minPerfectReload;
@@ -72,6 +74,8 @@ public class PlayerInventoryHandler : MonoBehaviour
 
     private void Awake()
     {
+        reloadCanvas = GetComponentInChildren<ReloadCanvasHandler>();
+
         InputCustomSystem.OnNextWeaponAction += GetNextWeapon;
         InputCustomSystem.OnPreviousWeaponAction += GetPreviousWeapon;
         InputCustomSystem.OnReloadAction += Reload;
@@ -122,7 +126,11 @@ public class PlayerInventoryHandler : MonoBehaviour
         {
             minPerfectReload = UnityEngine.Random.Range(0.2f, usedWeapon.reloadTime);
             maxPerfectReload = minPerfectReload + deltaReloading;
+            Debug.Log("Min: "+ minPerfectReload);
+            Debug.Log("Max: "+ maxPerfectReload);
+
             StartCoroutine(ReloadQuickTimeEvent(usedWeapon));
+            reloadCanvas.UpdateTargetPosition((maxPerfectReload + minPerfectReload)*.5f, usedWeapon.reloadTime);
             return;
         }
         

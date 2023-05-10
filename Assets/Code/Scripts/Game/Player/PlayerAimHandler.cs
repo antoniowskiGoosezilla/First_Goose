@@ -99,7 +99,7 @@ namespace AntoNamespace
                 comboHandler.AddPoints(100);
             
             OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo);
-            //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
+            //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost); DEPRECATED
             playerStatsHandler.RemoveActionStacks(usedWeapon.mainShotCost);
         }
     }
