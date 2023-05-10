@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class Weapon : MonoBehaviour, IEquippable
 {
@@ -51,20 +52,35 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         yield return new WaitForSeconds(reloadTime);
 
         if(totalAmmo >= maxMagAmmo)
+        {
             magAmmo = maxMagAmmo;
+            totalAmmo -= maxMagAmmo;
+        }
+
         else
+        {
             magAmmo = totalAmmo;
+            totalAmmo = 0;
+        }
+
         //Aggiungere suono
         Debug.Log("Caricato");
     }
 
     public void StandardReload()
     {
+
         if(totalAmmo >= maxMagAmmo)
+        {
+            totalAmmo -= maxMagAmmo - magAmmo;
             magAmmo = maxMagAmmo;
+        }
+
         else
+        {
             magAmmo = totalAmmo;
-        //Aggiungere suono
+            totalAmmo = 0;
+        }
         Debug.Log("Caricato");
     }
 
@@ -85,7 +101,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
 
     public void PlaySound(AudioClip clip)
     {
-        float pitch = Random.Range(0.5f, 2f);
+        float pitch = UnityEngine.Random.Range(0.5f, 2f);
         AudioSource.PlayClipAtPoint(clip, transform.position, 1f);
     }
 }

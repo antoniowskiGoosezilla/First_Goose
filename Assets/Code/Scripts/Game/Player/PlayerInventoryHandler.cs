@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AntoNamespace;
@@ -8,15 +9,19 @@ public class PlayerInventoryHandler : MonoBehaviour
 {
 
     //PUBLIC
-    [SerializeField] Inventory inventory;
-
     public GameObject equippedWeapon;
     public string equippedObject; //Creare tipo Oggetto
+    
+    [SerializeField] Inventory inventory;
     [Space]
     [Header("SUONI")]
     [SerializeField] AudioClip perfectReloadSound;
 
-    
+
+    //EVENTI
+    public static event Action<float, float> OnUpdateWeaponAmmo;
+    //*************
+
     public GameObject GetWeapon(int index)
     {
         switch(index)
@@ -40,7 +45,6 @@ public class PlayerInventoryHandler : MonoBehaviour
         EquipWeapon(GetWeapon(inventory.weaponIndex));
 
     }
-
     public void GetPreviousWeapon(InputAction.CallbackContext context)
     {
         inventory.weaponIndex -= 1;
@@ -50,6 +54,8 @@ public class PlayerInventoryHandler : MonoBehaviour
         UnequipWeapon();
         EquipWeapon(GetWeapon(inventory.weaponIndex));
     }
+
+
 
 
 
@@ -88,9 +94,11 @@ public class PlayerInventoryHandler : MonoBehaviour
     private void EquipWeapon(GameObject weapon)
     {
         equippedWeapon = Instantiate(weapon, transform.Find("RightHand").position, Quaternion.identity);
-        equippedObject = inventory.equippedObject;
+        //equippedObject = inventory.equippedObject;
         equippedWeapon.transform.parent = transform.Find("RightHand");
         equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z+.2f);
+
+        OnUpdateWeaponAmmo?.Invoke(equippedWeapon.GetComponent<Weapon>().magAmmo, equippedWeapon.GetComponent<Weapon>().totalAmmo);
     }
 
     private void UnequipWeapon()
@@ -112,7 +120,7 @@ public class PlayerInventoryHandler : MonoBehaviour
 
         if(!isReloading)
         {
-            minPerfectReload = Random.Range(0.2f, usedWeapon.reloadTime);
+            minPerfectReload = UnityEngine.Random.Range(0.2f, usedWeapon.reloadTime);
             maxPerfectReload = minPerfectReload + deltaReloading;
             StartCoroutine(ReloadQuickTimeEvent(usedWeapon));
             return;
@@ -125,13 +133,14 @@ public class PlayerInventoryHandler : MonoBehaviour
             //StartCoroutine(usedWeapon.Reload());
             AudioSource.PlayClipAtPoint(perfectReloadSound, transform.position); //DEBUG
             usedWeapon.StandardReload();
-            ResetRelaod();
+            ResetReload();
         }
         else{
             //AGGIUNGERE MALUS
             usedWeapon.StandardReload();
-            ResetRelaod();
+            ResetReload();
         }
+        OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo);
         //StartCoroutine(usedWeapon.Reload());
     }
 
@@ -147,10 +156,12 @@ public class PlayerInventoryHandler : MonoBehaviour
         //Aggiungere Malus dei punti
         //StartCoroutine(weapon.Reload());
         weapon.StandardReload();
-        ResetRelaod();
+        ResetReload();
+
+        OnUpdateWeaponAmmo?.Invoke(weapon.magAmmo, weapon.totalAmmo);
     }
 
-    private void ResetRelaod()
+    private void ResetReload()
     {
             reloadTimer = 0;
             minPerfectReload = 0;

@@ -16,6 +16,9 @@ namespace AntoNamespace
     
         [SerializeField] LayerMask layerToCheck;
 
+        //EVENTI
+        public static event Action<float, float> OnUpdateWeaponAmmo;
+
 
         //PRIVATE 
         private PlayerInventoryHandler playerInventoryHandler;
@@ -95,6 +98,7 @@ namespace AntoNamespace
             if(shotResult)                  //Se colpiamo un avversario, aggiungiamo i punti;
                 comboHandler.AddPoints(100);
             
+            OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo);
             //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost);
             playerStatsHandler.RemoveActionStacks(usedWeapon.mainShotCost);
         }

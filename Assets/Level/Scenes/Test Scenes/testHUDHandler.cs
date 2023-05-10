@@ -26,6 +26,9 @@ public class testHUDHandler : MonoBehaviour
     private TextMeshProUGUI comboPoints;
     private Slider comboTimer;
 
+    private TextMeshProUGUI currentAmmoText;
+    private TextMeshProUGUI totalAmmoText;
+
     private void Awake()
     {
         //Eventi
@@ -33,7 +36,8 @@ public class testHUDHandler : MonoBehaviour
         PlayerStatsHandler.OnUpdateCooldown += UpdateStackValue;
         ComboHandler.OnUpdateCombo += UpdateComboMeter;
         ComboHandler.OnUpadateComboTimer += UpdateTimer;
-
+        PlayerAimHandler.OnUpdateWeaponAmmo += UpdateAmmoCounter;
+        PlayerInventoryHandler.OnUpdateWeaponAmmo += UpdateAmmoCounter;
 
         actionStacksArray = new List<GameObject>();
         foreach(Transform child in actionStacks.transform)
@@ -44,6 +48,9 @@ public class testHUDHandler : MonoBehaviour
         comboTitle = comboMeter.transform.Find("Combo Name").gameObject.GetComponent<TextMeshProUGUI>();
         comboPoints = comboMeter.transform.Find("Points").gameObject.GetComponent<TextMeshProUGUI>();
         comboTimer = comboMeter.transform.Find("Timer").gameObject.GetComponent<Slider>();
+
+        currentAmmoText = ammo.transform.Find("CurrentAmmo").gameObject.GetComponent<TextMeshProUGUI>();
+        totalAmmoText = ammo.transform.Find("Total").gameObject.GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -105,5 +112,11 @@ public class testHUDHandler : MonoBehaviour
     private void UpdateTimer(float newValue)
     {
         comboTimer.value = newValue;
+    }
+
+    private void UpdateAmmoCounter(float currentAmmo, float totalAmmo)
+    {
+        currentAmmoText.text = currentAmmo.ToString();
+        totalAmmoText.text = totalAmmo.ToString();
     }
 }

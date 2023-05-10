@@ -21,7 +21,6 @@ public class Pistol : Weapon
         {
             Debug.Log("Colpito");
         }
-        
         StartCoroutine(StartShootingCooldown());
         return isHit;
     }
