@@ -55,7 +55,7 @@ public class testHUDHandler : MonoBehaviour
 
     private void Start()
     {
-        
+        comboMeter.SetActive(false);
     }
 
     private void Update()
@@ -104,9 +104,17 @@ public class testHUDHandler : MonoBehaviour
 
     private void UpdateComboMeter(float points, float timer, string comboName)
     {
+        if(comboMeter.activeInHierarchy == false)
+            comboMeter.SetActive(true);
+
         comboTitle.text = comboName;
         comboPoints.text = points.ToString();
         comboTimer.value = timer;
+
+        if(timer == 0)
+        {
+            comboMeter.SetActive(false);
+        }
     }
 
     private void UpdateTimer(float newValue)
