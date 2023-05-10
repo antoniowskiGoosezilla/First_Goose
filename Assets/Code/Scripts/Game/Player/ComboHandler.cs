@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 
 namespace AntoNamespace
 {    
@@ -20,6 +20,12 @@ namespace AntoNamespace
 
         //PUBLIC
 
+        //EVENTI
+        public static event Action<float, float, string> OnUpdateCombo;
+        public static event Action<float> OnUpadateComboTimer;
+
+
+
         public float comboPoints = 0; //{get; private set;}
         public ComboGrade comboGrade = ComboGrade.None;
 
@@ -30,6 +36,8 @@ namespace AntoNamespace
             comboPoints += points;
             comboTimer = comboInterval;
             UpdateComboGrade();
+
+            OnUpdateCombo?.Invoke(comboPoints, 1, comboGrade.ToString());
 
             if(!comboStarted)
                 StartCoroutine("StartComboCooldown");
@@ -53,7 +61,7 @@ namespace AntoNamespace
 
         private bool comboStarted = false;
         private float comboTimer;
-        private float comboInterval = 10;
+        private float comboInterval = 4;                //4 secondi
 
         private float percentageTotalPointGain = 0.07f;
 
@@ -107,6 +115,7 @@ namespace AntoNamespace
             comboPoints = 0;
             comboGrade = ComboGrade.None;
             comboStarted = false;
+            OnUpdateCombo?.Invoke(comboPoints, comboTimer, comboGrade.ToString());
         }
 
         private IEnumerator StartComboCooldown()
@@ -115,6 +124,7 @@ namespace AntoNamespace
             while(comboTimer > 0)
             {
                 comboTimer -= Time.deltaTime;
+                OnUpadateComboTimer(comboTimer/comboInterval);
                 yield return null;
             }
 

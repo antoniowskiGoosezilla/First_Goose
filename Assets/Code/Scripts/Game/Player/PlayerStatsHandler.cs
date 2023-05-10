@@ -14,9 +14,9 @@ namespace AntoNamespace{
         
         [Space]
         [Header("EVENTI")]
-        public UnityEvent OnEndStacks;
+        public UnityEvent OnEndStacks;                          //UNITY EVENTS per comunicare con moduli dello stesso oggetto (VEDI ISPECTOR)
         
-        public static event Action<int, bool> OnUpdateStacks;
+        public static event Action<int, bool> OnUpdateStacks;   //Eventi normali per comunicare con moduli globali o di altri oggetti
         public static event Action<int, float> OnUpdateCooldown;
 
 

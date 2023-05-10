@@ -3,31 +3,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using AntoNamespace;
+using TMPro;
 
 public class testHUDHandler : MonoBehaviour
 {
     //PUBLIC
+    [Header("HEALTH, STACKS AND AMMO")]
     [SerializeField] GameObject health;
     [SerializeField] GameObject actionStacks;
     [SerializeField] GameObject ammo;
+    [Space]
+    [Header("COMBO METER")]
+    [SerializeField] GameObject comboMeter;
+
 
 
     //PRIVATE
 
     private List<GameObject> actionStacksArray;
 
+    private TextMeshProUGUI comboTitle;
+    private TextMeshProUGUI comboPoints;
+    private Slider comboTimer;
+
     private void Awake()
     {
-        actionStacksArray = new List<GameObject>();
-
         //Eventi
         PlayerStatsHandler.OnUpdateStacks += UpdateStacks;
         PlayerStatsHandler.OnUpdateCooldown += UpdateStackValue;
+        ComboHandler.OnUpdateCombo += UpdateComboMeter;
+        ComboHandler.OnUpadateComboTimer += UpdateTimer;
 
+
+        actionStacksArray = new List<GameObject>();
         foreach(Transform child in actionStacks.transform)
         {
             actionStacksArray.Add(child.gameObject);
         }
+
+        comboTitle = comboMeter.transform.Find("Combo Name").gameObject.GetComponent<TextMeshProUGUI>();
+        comboPoints = comboMeter.transform.Find("Points").gameObject.GetComponent<TextMeshProUGUI>();
+        comboTimer = comboMeter.transform.Find("Timer").gameObject.GetComponent<Slider>();
     }
 
     private void Start()
@@ -77,5 +93,17 @@ public class testHUDHandler : MonoBehaviour
         }
         Slider stack = actionStacksArray[realIndex].GetComponent<Slider>();
         stack.value = newValue;
+    }
+
+    private void UpdateComboMeter(float points, float timer, string comboName)
+    {
+        comboTitle.text = comboName;
+        comboPoints.text = points.ToString();
+        comboTimer.value = timer;
+    }
+
+    private void UpdateTimer(float newValue)
+    {
+        comboTimer.value = newValue;
     }
 }
