@@ -27,6 +27,11 @@ public class ReloadCanvasHandler : MonoBehaviour
         input.value = currentValue;
     }
 
+    public void UpdateQuickTimeEventReload(float currentValue, float oldValue, float interval)
+    {
+        input.value = Mathf.Lerp(oldValue, currentValue, interval);
+    }
+
     public void DeactivateReloadSlider()
     {
         quickTimeEventSlider.SetActive(false);
@@ -60,7 +65,7 @@ public class ReloadCanvasHandler : MonoBehaviour
         
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         AdjustCanvasPosition();
     }

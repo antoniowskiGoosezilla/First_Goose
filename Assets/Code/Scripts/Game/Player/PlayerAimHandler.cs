@@ -45,7 +45,7 @@ namespace AntoNamespace
 
         void Update()
         {
-            UpdateMouseWorldPosition();
+                UpdateMouseWorldPosition();
         }
 
         void UpdateMouseWorldPosition()
@@ -83,8 +83,10 @@ namespace AntoNamespace
             if(usedWeapon.inCooldown)
                 return;
 
-            //Ruotiamo il modello nella direzione dello sparo
-            transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
+            //Ruotiamo il modello nella direzione dello sparo se usiamo mouse + tastiera
+            if(InputCustomSystem.controllerType == InputCustomSystem.ControllerType.KEYBOARD)
+                transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
+
             
             if(usedWeapon.magAmmo == 0)
             {

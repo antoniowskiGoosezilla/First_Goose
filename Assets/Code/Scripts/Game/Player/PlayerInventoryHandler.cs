@@ -167,8 +167,9 @@ public class PlayerInventoryHandler : MonoBehaviour
         reloadCanvas.SetMaxReloadValue(weapon.reloadTime);
         while (reloadTimer < weapon.reloadTime)
         {
+            float oldValue = reloadTimer;
             reloadTimer += Time.deltaTime;
-            reloadCanvas.UpdateQuickTimeEventReload(reloadTimer);
+            reloadCanvas.UpdateQuickTimeEventReload(reloadTimer, oldValue, reloadTimer/weapon.reloadTime);
             yield return null;
         }
 

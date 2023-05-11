@@ -171,20 +171,36 @@ namespace AntoNamespace
             switch (change)
             {
                 case InputDeviceChange.Added:
-                    OnConnectController();
+                    OnConnectController(device);
                     break;
                 case InputDeviceChange.Removed:
-                    OnDisconnectController();
+                    OnDisconnectController(device);
                     break;
+                case InputDeviceChange.Reconnected:
+                    OnConnectController(device);
+                    break;
+                case InputDeviceChange.Enabled:
+                    OnConnectController(device);
+                    break;
+                case InputDeviceChange.UsageChanged:
+                    OnConnectController(device);
+                    break;
+                
                 default:
                     break;
             }
         }
-        static void OnConnectController()
+        static void OnConnectController(InputDevice device)
         {
-            Debug.Log("Controller Connesso");
+            Debug.Log("Controller Connesso: " + device.displayName);
+            if(device.displayName.Contains("Xbox"))
+                controllerType = ControllerType.XBOX_CONTROLLER;
+            else if(device.displayName.Contains("Playstation"))
+                controllerType = ControllerType.PLAYSTATION_CONTROLLER;
+            else
+                controllerType = ControllerType.KEYBOARD;
         }   
-        static void OnDisconnectController()
+        static void OnDisconnectController(InputDevice device)
         {
             Debug.Log("Controller Disconnesso");
         }
