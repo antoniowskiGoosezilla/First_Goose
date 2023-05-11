@@ -89,11 +89,12 @@ public class PlayerInventoryHandler : MonoBehaviour
         UnequipWeapon();
         EquipWeapon(GetWeapon(inventory.weaponIndex));
     }
-
     private void Update()
     {
         
     }
+
+    //Funzione per equipaggiare l'arma instanziando il modello 3D nella posizione desiderata
 
     private void EquipWeapon(GameObject weapon)
     {
@@ -105,10 +106,15 @@ public class PlayerInventoryHandler : MonoBehaviour
         OnUpdateWeaponAmmo?.Invoke(equippedWeapon.GetComponent<Weapon>().magAmmo, equippedWeapon.GetComponent<Weapon>().totalAmmo);
     }
 
-    private void UnequipWeapon()
-    {
+    private void UnequipWeapon()                            //Funzione per rimuovere i modelli 3D quando si cambia o butta un
+    {                                                       //un'arma
         Destroy(equippedWeapon);
     }
+
+    //Funzione di ricarica legata al player.
+    //La ricarica chiama l'effettiva funzione dell'arma per ricaricarla
+    //ma è utile a gestire tutta una serie di controlli che altrimenti sarebbero
+    //legati alle singole armi
 
     private void Reload(InputAction.CallbackContext context)
     {
@@ -124,17 +130,17 @@ public class PlayerInventoryHandler : MonoBehaviour
 
         if(!isReloading)
         {
-            minPerfectReload = UnityEngine.Random.Range(0.2f, usedWeapon.reloadTime);
+            isReloading = true;
+            minPerfectReload = UnityEngine.Random.Range(0.45f, usedWeapon.reloadTime);
             maxPerfectReload = minPerfectReload + deltaReloading;
-            Debug.Log("Min: "+ minPerfectReload);
-            Debug.Log("Max: "+ maxPerfectReload);
+            float media = (maxPerfectReload + minPerfectReload)*0.5f;
+            reloadCanvas.UpdateTargetPosition(media, usedWeapon.reloadTime);
 
             StartCoroutine(ReloadQuickTimeEvent(usedWeapon));
-            reloadCanvas.UpdateTargetPosition((maxPerfectReload + minPerfectReload)*.5f, usedWeapon.reloadTime);
             return;
         }
         
-        StopCoroutine("ReloadQuickTimeEvent");
+        StopCoroutine(ReloadQuickTimeEvent(usedWeapon));
         if(reloadTimer >= minPerfectReload && reloadTimer <= maxPerfectReload)
         {
             //AGGIUNGI I PUNTI BONUS
@@ -153,17 +159,19 @@ public class PlayerInventoryHandler : MonoBehaviour
     }
 
     private IEnumerator ReloadQuickTimeEvent(Weapon weapon)
-    {
+    {   
         reloadTimer = 0;
+        reloadCanvas.SetMaxReloadValue(weapon.reloadTime);
         while (reloadTimer < weapon.reloadTime)
         {
             reloadTimer += Time.deltaTime;
+            reloadCanvas.UpdateQuickTimeEventReload(reloadTimer);
             yield return null;
         }
 
         //Aggiungere Malus dei punti
-        //StartCoroutine(weapon.Reload());
-        weapon.StandardReload();
+        //StartCoroutine(weapon.Reload());              //Ricarica con cooldown
+        weapon.StandardReload();                        //Ricarica Immediata;
         ResetReload();
 
         OnUpdateWeaponAmmo?.Invoke(weapon.magAmmo, weapon.totalAmmo);

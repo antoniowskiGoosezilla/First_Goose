@@ -50,7 +50,7 @@ MonoBehaviour:
   damage: 1
   range: 5
   precision: 0.9
-  reloadTime: 0
+  reloadTime: 1.5
   shotCooldown: 0
   inCooldown: 0
   mainShotCost: 1

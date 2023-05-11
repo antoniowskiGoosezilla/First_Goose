@@ -21,6 +21,8 @@ public class testHUDHandler : MonoBehaviour
     //PRIVATE
 
     private List<GameObject> actionStacksArray;
+    private Color activeStackColor = Color.yellow;
+    private Color disactiveStackColor = new Color(Color.yellow.r, Color.yellow.g, Color.yellow.b, 0.33f);
 
     private TextMeshProUGUI comboTitle;
     private TextMeshProUGUI comboPoints;
@@ -71,6 +73,7 @@ public class testHUDHandler : MonoBehaviour
             {
                 Slider slider = actionStack.GetComponent<Slider>();
                 slider.value = add ? 1 : 0;
+                actionStack.transform.Find("Fill").GetComponent<Image>().color = add ? activeStackColor : disactiveStackColor; //Aggiorna il colore
             }
             return;
         }
@@ -84,6 +87,7 @@ public class testHUDHandler : MonoBehaviour
             return;
         }
 
+        stack.transform.Find("Fill").GetComponent<Image>().color = activeStackColor;
         stack.value = 1;
 
         
@@ -99,6 +103,7 @@ public class testHUDHandler : MonoBehaviour
             nextStack.value = 0;
         }
         Slider stack = actionStacksArray[realIndex].GetComponent<Slider>();
+        actionStacksArray[realIndex].transform.Find("Fill").GetComponent<Image>().color = disactiveStackColor;
         stack.value = newValue;
     }
 
@@ -127,4 +132,5 @@ public class testHUDHandler : MonoBehaviour
         currentAmmoText.text = currentAmmo.ToString();
         totalAmmoText.text = totalAmmo.ToString();
     }
+
 }
