@@ -13,8 +13,7 @@ public class ReloadCanvasHandler : MonoBehaviour
         //_start position = 0
         //_end position = maxReloadTime
         //correctTimer => _end : maxReloadTime = x_pos : correctTime =>
-        input.enabled = true;
-        target.enabled = true;
+        quickTimeEventSlider.SetActive(true);
         target.maxValue = maxReloadTime;
         target.value = correctTime;
     }
@@ -26,6 +25,11 @@ public class ReloadCanvasHandler : MonoBehaviour
     public void UpdateQuickTimeEventReload(float currentValue)
     {
         input.value = currentValue;
+    }
+
+    public void DeactivateReloadSlider()
+    {
+        quickTimeEventSlider.SetActive(false);
     }
 
 
@@ -44,14 +48,15 @@ public class ReloadCanvasHandler : MonoBehaviour
     {
         target = quickTimeEventSlider.transform.Find("TargetSlider").GetComponent<Slider>();
         input = quickTimeEventSlider.GetComponent<Slider>();
+        target.value = 0;
+        input.value = 0;
 
+        quickTimeEventSlider.SetActive(false);
     }
 
     private void Start()
     {
         _camera = Camera.main;
-        target.enabled = false;
-        input.enabled = false;
         
     }
 

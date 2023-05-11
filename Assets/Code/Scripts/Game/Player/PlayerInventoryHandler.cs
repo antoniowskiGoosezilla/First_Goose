@@ -63,18 +63,20 @@ public class PlayerInventoryHandler : MonoBehaviour
     //PRIVATE
 
     private ReloadCanvasHandler reloadCanvas;
+    private ComboHandler comboHandler;
 
     private bool isReloading;
     private float deltaReloading = 0.3f;
     private float minPerfectReload;
     private float maxPerfectReload;
     private float reloadTimer = 0;
-
+    private Coroutine reloadCoroutine;
 
 
     private void Awake()
     {
         reloadCanvas = GetComponentInChildren<ReloadCanvasHandler>();
+        comboHandler = GetComponent<ComboHandler>();
 
         InputCustomSystem.OnNextWeaponAction += GetNextWeapon;
         InputCustomSystem.OnPreviousWeaponAction += GetPreviousWeapon;
@@ -119,7 +121,7 @@ public class PlayerInventoryHandler : MonoBehaviour
     private void Reload(InputAction.CallbackContext context)
     {
         Weapon usedWeapon = equippedWeapon.GetComponent<Weapon>();
-        if(usedWeapon == null)
+        if(usedWeapon == null)                                     //Check per evitare errori
             return;
         
         if(usedWeapon.magAmmo == usedWeapon.maxMagAmmo)            //Non deve caricare se il caricatore è pieno
@@ -136,14 +138,14 @@ public class PlayerInventoryHandler : MonoBehaviour
             float media = (maxPerfectReload + minPerfectReload)*0.5f;
             reloadCanvas.UpdateTargetPosition(media, usedWeapon.reloadTime);
 
-            StartCoroutine(ReloadQuickTimeEvent(usedWeapon));
+            reloadCoroutine = StartCoroutine(ReloadQuickTimeEvent(usedWeapon));
             return;
         }
         
-        StopCoroutine(ReloadQuickTimeEvent(usedWeapon));
+        StopCoroutine(reloadCoroutine);
         if(reloadTimer >= minPerfectReload && reloadTimer <= maxPerfectReload)
         {
-            //AGGIUNGI I PUNTI BONUS
+            comboHandler.AddPoints(150);
             //StartCoroutine(usedWeapon.Reload());
             AudioSource.PlayClipAtPoint(perfectReloadSound, transform.position); //DEBUG
             usedWeapon.StandardReload();
@@ -151,6 +153,7 @@ public class PlayerInventoryHandler : MonoBehaviour
         }
         else{
             //AGGIUNGERE MALUS
+            comboHandler.AddPoints(-250);
             usedWeapon.StandardReload();
             ResetReload();
         }
@@ -183,6 +186,8 @@ public class PlayerInventoryHandler : MonoBehaviour
             minPerfectReload = 0;
             maxPerfectReload = 0;
             isReloading = false;
+            reloadCoroutine = null;
+            reloadCanvas.DeactivateReloadSlider();
     }
     
 }
