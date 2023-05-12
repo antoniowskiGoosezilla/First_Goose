@@ -45,6 +45,8 @@ namespace AntoNamespace
         public static event Action<InputAction.CallbackContext> OnPreviousWeaponAction;
         public static event Action<InputAction.CallbackContext> OnSpecificWeaponAction;
         public static event Action<InputAction.CallbackContext> OnReloadAction;
+        
+        public static event Action<InputAction.CallbackContext> OnTest;
 
         #region PRIVATE
         private static bool isInit = false;
@@ -80,6 +82,7 @@ namespace AntoNamespace
             SetUpAimInput();
             SetUpShootInput();
             SetUpChangeWeaponInput();
+            SetUpTest();
 
             inputAction.Pause.Button.performed += OnPauseToggle;
             InputSystem.onDeviceChange += OnControllerChange; //PEr il controllo dei device 
@@ -129,6 +132,10 @@ namespace AntoNamespace
         {
             inputAction.Game.NextWeapon.performed += OnNextWeaponAction;
             inputAction.Game.PreviousWeapon.performed += OnPreviousWeaponAction;
+        }
+        static void SetUpTest()
+        {
+            inputAction.Game.Interact.performed += OnTest;
         }
         #endregion
 
