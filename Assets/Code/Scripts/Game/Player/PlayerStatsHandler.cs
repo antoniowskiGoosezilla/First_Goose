@@ -8,7 +8,7 @@ namespace AntoNamespace{
     public class PlayerStatsHandler : CharacterStats
     {
         //PUBLIC O ACCESSIBILI DALL'EDITOR
-        public int availableActionStacks; /*{get; private set;}*/    //Variabile accessibile dagli altri moduli
+        public int availableActionStacks {get; private set;}    //Variabile accessibile dagli altri moduli
                                                                 //per verificare la presenza di AS.
                                                                 //Considerare un possibile "semaforo" per l'accesso
         

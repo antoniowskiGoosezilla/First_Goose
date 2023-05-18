@@ -133,7 +133,7 @@ public class PlayerInventoryHandler : MonoBehaviour
         if(!isReloading)
         {
             isReloading = true;
-            minPerfectReload = UnityEngine.Random.Range(0.45f, usedWeapon.reloadTime);
+            minPerfectReload = UnityEngine.Random.Range(0.45f, usedWeapon.reloadTime - deltaReloading);
             maxPerfectReload = minPerfectReload + deltaReloading;
             float media = (maxPerfectReload + minPerfectReload)*0.5f;
             reloadCanvas.UpdateTargetPosition(media, usedWeapon.reloadTime);

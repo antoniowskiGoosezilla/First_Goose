@@ -34,6 +34,8 @@ namespace AntoNamespace
         public void AddPoints(float points)
         {
             comboPoints += points;
+            if(comboPoints < 0)
+                comboPoints = 0;
             comboTimer = comboInterval;
             UpdateComboGrade();
 
