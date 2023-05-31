@@ -30,6 +30,7 @@ public class testHUDHandler : MonoBehaviour
 
     private TextMeshProUGUI currentAmmoText;
     private TextMeshProUGUI totalAmmoText;
+    private TextMeshProUGUI maxTotalAmmoText;
 
     private void Awake()
     {
@@ -53,6 +54,7 @@ public class testHUDHandler : MonoBehaviour
 
         currentAmmoText = ammo.transform.Find("CurrentAmmo").gameObject.GetComponent<TextMeshProUGUI>();
         totalAmmoText = ammo.transform.Find("Total").gameObject.GetComponent<TextMeshProUGUI>();
+        maxTotalAmmoText = ammo.transform.Find("MaxTotal").gameObject.GetComponent<TextMeshProUGUI>();
     }
 
     private void Start()
@@ -131,6 +133,13 @@ public class testHUDHandler : MonoBehaviour
     {
         currentAmmoText.text = currentAmmo.ToString();
         totalAmmoText.text = totalAmmo.ToString();
+    }
+
+    private void UpdateAmmoCounter(float currentAmmo, float totalAmmo, float maxTotalAmmo)
+    {
+        currentAmmoText.text = currentAmmo.ToString();
+        totalAmmoText.text = totalAmmo.ToString();
+        maxTotalAmmoText.text = maxTotalAmmo.ToString();
     }
 
 }

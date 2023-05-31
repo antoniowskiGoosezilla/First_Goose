@@ -19,7 +19,7 @@ public class PlayerInventoryHandler : MonoBehaviour
 
 
     //EVENTI
-    public static event Action<float, float> OnUpdateWeaponAmmo;
+    public static event Action<float, float, float> OnUpdateWeaponAmmo;
     //*************
 
     public GameObject GetWeapon(int index)
@@ -105,7 +105,7 @@ public class PlayerInventoryHandler : MonoBehaviour
         equippedWeapon.transform.parent = transform.Find("RightHand");
         equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z+.2f);
 
-        OnUpdateWeaponAmmo?.Invoke(equippedWeapon.GetComponent<Weapon>().magAmmo, equippedWeapon.GetComponent<Weapon>().totalAmmo);
+        OnUpdateWeaponAmmo?.Invoke(equippedWeapon.GetComponent<Weapon>().magAmmo, equippedWeapon.GetComponent<Weapon>().totalAmmo, equippedWeapon.GetComponent<Weapon>().maxTotalAmmo);
     }
 
     private void UnequipWeapon()                            //Funzione per rimuovere i modelli 3D quando si cambia o butta un
@@ -157,7 +157,7 @@ public class PlayerInventoryHandler : MonoBehaviour
             usedWeapon.StandardReload();
             ResetReload();
         }
-        OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo);
+        OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo, usedWeapon.maxTotalAmmo);
         //StartCoroutine(usedWeapon.Reload());
     }
 
@@ -178,7 +178,7 @@ public class PlayerInventoryHandler : MonoBehaviour
         weapon.StandardReload();                        //Ricarica Immediata;
         ResetReload();
 
-        OnUpdateWeaponAmmo?.Invoke(weapon.magAmmo, weapon.totalAmmo);
+        OnUpdateWeaponAmmo?.Invoke(weapon.magAmmo, weapon.totalAmmo, weapon.maxTotalAmmo);
     }
 
     private void ResetReload()
