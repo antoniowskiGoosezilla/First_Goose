@@ -10,35 +10,31 @@ public class WeaponTemplate : ScriptableObject
     public string weaponBrand;
 
     //STATS
-    [Header("Stats")]
+    [Header("Statistiche")]
     public float damage;
     public float range;
     [Range(0,1)]
     public float precision;
     public float reloadTime;
+
+    public Weapon.WeaponCategory category;
     
     public float shotCooldown;              //Serve per definire il rateo di fuoco
     public int mainShotCost = 1;
     public int alternativeShotCost;
 
-    [Header("Ammo")]
-    public float magAmmo;
+    [Header("Munizioni")]
     public float maxMagAmmo;
-    public float totalAmmo;
     public float maxTotalAmmo;
 
     public Weapon.WeaponType type;
     public int rarity;
 
     [Header("Suoni")]
-    [SerializeField] protected AudioClip mainShotSound;
-    [SerializeField] protected AudioClip alternativeShotSound;
+    public AudioClip mainShotSound;
+    public AudioClip alternativeShotSound;
     
     [Header("Prefab")]
     [SerializeField] GameObject prefab;
-    void Start()
-    {
-        
-    }
 
 }

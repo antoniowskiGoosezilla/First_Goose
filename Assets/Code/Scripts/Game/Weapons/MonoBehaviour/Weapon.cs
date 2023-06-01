@@ -14,6 +14,18 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         MAGIC_ICE
     }
 
+    public enum WeaponCategory
+    {
+        PISTOL,
+        RIFLE,
+        SHOTGUN,
+        LASER,
+        LAUNCHER,
+        CHARGER
+    }
+    
+    [SerializeField] WeaponTemplate weaponTemplate;
+
     public string weaponName;
     public string weaponBrand;
 
@@ -103,5 +115,28 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     {
         float pitch = UnityEngine.Random.Range(0.5f, 2f);
         AudioSource.PlayClipAtPoint(clip, transform.position, 1f);
+    }
+
+    public void WeaponFirstInit()
+    {
+        weaponName = weaponTemplate.weaponName;
+        weaponBrand = weaponTemplate.weaponBrand;
+        damage = weaponTemplate.damage;
+        range = weaponTemplate.range;
+        precision = weaponTemplate.precision;
+        reloadTime = weaponTemplate.reloadTime;
+        shotCooldown = weaponTemplate.shotCooldown;
+        inCooldown = false;
+        mainShotCost = weaponTemplate.mainShotCost;
+        alternativeShotCost = weaponTemplate.alternativeShotCost;
+        magAmmo = weaponTemplate.maxMagAmmo;
+        maxMagAmmo = weaponTemplate.maxMagAmmo;
+        totalAmmo = weaponTemplate.maxTotalAmmo;
+        maxTotalAmmo = weaponTemplate.maxTotalAmmo;
+        type = weaponTemplate.type;
+        rarity = weaponTemplate.rarity;
+
+        mainShotSound = weaponTemplate.mainShotSound;
+        alternativeShotSound = weaponTemplate.alternativeShotSound;
     }
 }

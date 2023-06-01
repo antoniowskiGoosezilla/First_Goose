@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using UnityEngine.EventSystems;
 
 //Classe che gestisce la scena del menu principale
 public class MainMenuManager : MonoBehaviour
@@ -14,10 +15,14 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] GameObject title;
     [SerializeField] GameObject whiteTitle;
     [Space]
-    [Header("Buttons")]
+    [Header("Buttons And Selector")]
     [SerializeField] GameObject playBtn;
     [SerializeField] GameObject settingsBtn;
     [SerializeField] GameObject quitBtn;
+    [Header("Selector")]
+    [SerializeField] GameObject selector;
+    [Header("Event System")]
+    [SerializeField] EventSystem eventSystem;
 
     
     
@@ -30,13 +35,24 @@ public class MainMenuManager : MonoBehaviour
 
     private void Start()
     {
-        SetSceneTime();
+        //SetSceneTime();
+        selector.transform.position = playBtn.transform.Find("SelectorPosition").position;
+        eventSystem.SetSelectedGameObject(eventSystem.firstSelectedGameObject);
     }
 
     
     private void Update()
     {
         
+    }
+
+    private void LateUpdate()
+    {
+        //Una merda, MA per ora funziona
+        if(selector.transform.position != eventSystem.currentSelectedGameObject.transform.Find("SelectorPosition").position)
+        {
+            selector.transform.position = Vector3.Lerp(selector.transform.position, eventSystem.currentSelectedGameObject.transform.Find("SelectorPosition").position, .1f);
+        }
     }
 
 

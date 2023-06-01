@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b3dd2eda132654195e71cfc8ac11e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponTemplate: {fileID: 11400000, guid: 3bbab19807d75fa48a563a6dd284c845, type: 2}
   weaponName: Pistol
   weaponBrand: Testeer
   damage: 1
