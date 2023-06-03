@@ -41,4 +41,11 @@ public class Pistol : Weapon
     {
         throw new System.NotImplementedException();
     }
+
+
+    private void Awake()
+    {
+        if(weaponTemplate != null) WeaponFirstInit();
+    }
+    
 }

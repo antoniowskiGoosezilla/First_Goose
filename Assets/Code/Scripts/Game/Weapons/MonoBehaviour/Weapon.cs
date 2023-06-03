@@ -24,7 +24,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         CHARGER
     }
     
-    [SerializeField] WeaponTemplate weaponTemplate;
+    [SerializeField] protected WeaponTemplate weaponTemplate;
 
     public string weaponName;
     public string weaponBrand;

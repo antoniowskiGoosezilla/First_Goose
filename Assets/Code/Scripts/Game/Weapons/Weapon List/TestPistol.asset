@@ -18,15 +18,14 @@ MonoBehaviour:
   range: 3
   precision: 1
   reloadTime: 1
+  category: 0
   shotCooldown: 0.3
   mainShotCost: 1
   alternativeShotCost: 2
-  magAmmo: 6
   maxMagAmmo: 6
-  totalAmmo: 30
   maxTotalAmmo: 30
   type: 0
   rarity: 1
-  mainShotSound: {fileID: 0}
+  mainShotSound: {fileID: 8300000, guid: 2edfae1375f084df4b61a0ad70c30fb5, type: 3}
   alternativeShotSound: {fileID: 0}
-  prefab: {fileID: 36808572827388307, guid: 3d86bd8598667da41aaa231db80c5c1a, type: 3}
+  prefab: {fileID: 4223220747559628978, guid: 51698fbf050711f4992687483cc41228, type: 3}
