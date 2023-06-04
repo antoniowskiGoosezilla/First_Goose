@@ -131,13 +131,19 @@ public class testHUDHandler : MonoBehaviour
 
     private void UpdateAmmoCounter(float currentAmmo, float totalAmmo)
     {
-        currentAmmoText.text = currentAmmo.ToString();
+        if(currentAmmo < 10)
+            currentAmmoText.text = "0" + currentAmmo.ToString();
+        else
+            currentAmmoText.text = currentAmmo.ToString();
         totalAmmoText.text = totalAmmo.ToString();
     }
 
     private void UpdateAmmoCounter(float currentAmmo, float totalAmmo, float maxTotalAmmo)
     {
-        currentAmmoText.text = currentAmmo.ToString();
+        if(currentAmmo < 10)
+            currentAmmoText.text = "0" + currentAmmo.ToString();
+        else
+            currentAmmoText.text = currentAmmo.ToString();
         totalAmmoText.text = totalAmmo.ToString();
         maxTotalAmmoText.text = maxTotalAmmo.ToString();
     }

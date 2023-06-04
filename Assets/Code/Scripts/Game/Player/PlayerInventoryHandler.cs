@@ -100,10 +100,10 @@ public class PlayerInventoryHandler : MonoBehaviour
 
     private void EquipWeapon(GameObject weapon)
     {
-        equippedWeapon = Instantiate(weapon, transform.Find("RightHand").position, Quaternion.identity);
+        equippedWeapon = Instantiate(weapon, transform.Find("RightHand").position, Quaternion.LookRotation(-transform.forward));
         //equippedObject = inventory.equippedObject;
         equippedWeapon.transform.parent = transform.Find("RightHand");
-        equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z+.2f);
+        equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z);
 
         OnUpdateWeaponAmmo?.Invoke(equippedWeapon.GetComponent<Weapon>().magAmmo, equippedWeapon.GetComponent<Weapon>().totalAmmo, equippedWeapon.GetComponent<Weapon>().maxTotalAmmo);
     }

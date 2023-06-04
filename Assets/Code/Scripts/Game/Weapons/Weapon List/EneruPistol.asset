@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88358f508eaf0542b02040bdadf554c, type: 3}
+  m_Name: EneruPistol
+  m_EditorClassIdentifier: 
+  weaponName: 
+  weaponBrand: 
+  damage: 1
+  range: 3
+  precision: 0.85
+  reloadTime: 3
+  category: 0
+  shotCooldown: 0.5
+  mainShotCost: 1
+  alternativeShotCost: 0
+  maxMagAmmo: 10
+  maxTotalAmmo: 100
+  type: 1
+  rarity: 1
+  mainShotSound: {fileID: 8300000, guid: 29872201bee5c4d73bc9988c0b622719, type: 3}
+  alternativeShotSound: {fileID: 0}
+  prefab: {fileID: 8318641520663865621, guid: 3e27c5cb4a77d534d9ca77aa954a2164, type: 3}
