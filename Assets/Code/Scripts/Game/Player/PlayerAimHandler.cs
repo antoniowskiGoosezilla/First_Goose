@@ -50,7 +50,7 @@ namespace AntoNamespace
 
         void LateUpdate()
         {
-            playerInventoryHandler.equippedWeapon.GetComponent<Weapon>().UpdateBullet(Time.deltaTime);
+            //playerInventoryHandler.equippedWeapon.GetComponent<Weapon>().UpdateBullet(Time.deltaTime);
         }
 
         void UpdateMouseWorldPosition()
