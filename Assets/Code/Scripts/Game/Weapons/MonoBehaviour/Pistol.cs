@@ -9,6 +9,9 @@ public class Pistol : Weapon
         if(mainShotSound != null)
             PlaySound(mainShotSound);
         
+        if(shotEffect != null)
+            shotEffect.Play();
+        
         magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
 
         //Generiamo un raggio per vedere se il proiettile colpisce il nemico

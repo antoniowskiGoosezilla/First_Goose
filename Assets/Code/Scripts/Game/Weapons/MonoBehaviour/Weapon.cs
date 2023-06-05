@@ -52,6 +52,11 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     [Header("Suoni")]
     [SerializeField] protected AudioClip mainShotSound;
     [SerializeField] protected AudioClip alternativeShotSound;
+    [SerializeField] protected AudioClip hitSound;
+    [Header("VFX")]
+    [SerializeField] protected ParticleSystem shotEffect;
+    [SerializeField] protected ParticleSystem hitEffect;
+
     
     protected static LayerMask layerMaskToCheck = 0x64;
 

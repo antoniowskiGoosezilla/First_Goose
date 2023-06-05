@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88358f508eaf0542b02040bdadf554c, type: 3}
   m_Name: EneruPistol
   m_EditorClassIdentifier: 
-  weaponName: 
-  weaponBrand: 
+  weaponName: Pistol
+  weaponBrand: Eneru
   damage: 1
   range: 3
   precision: 0.85
