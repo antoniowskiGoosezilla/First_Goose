@@ -14,16 +14,42 @@ public class Pistol : Weapon
         
         magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
 
+        /*
+        Vector3 velocity = -transform.forward * bulletSpeed;
+        Bullet bullet = CreateBullet(muzzle.position, velocity);
+        firedBullets.Add(bullet);
+        */
         //Generiamo un raggio per vedere se il proiettile colpisce il nemico
-        Ray shot = new Ray(transform.position, transform.forward);
+        if(muzzle == null) muzzle = transform;
+        Ray shot = new Ray(muzzle.position, -transform.forward); 
         RaycastHit hit;
-        bool isHit = Physics.Raycast(shot, out hit, range, layerMaskToCheck); //Sostituire lo 0 con il layermask su cui fare il controllo
         
+        bool isHit = Physics.Raycast(shot, out hit, range, layerMaskToCheck); //Sostituire lo 0 con il layermask su cui fare il controllo
+        TrailRenderer trail = Instantiate(trailShotEffect, transform.position, Quaternion.identity);
+        trail.AddPosition(shot.origin);
+
         //Se colpisce
         if(isHit)
         {
+            try
+            {
+                ParticleSystem effect = Instantiate(hitEffect, hit.point, Quaternion.identity);
+                effect.transform.forward = hit.normal;
+                effect.Emit(1);
+                trail.transform.position = hit.point;
+            }
+            catch
+            {
+                Debug.LogError("Effetto Hit o Trail mancante");
+            }
+
             Debug.Log("Colpito");
         }
+        else
+        {
+            trail.transform.position = muzzle.position - muzzle.forward * range; //Orribile, ma per ora fa il suo lavoro
+        }
+
         StartCoroutine(StartShootingCooldown());
         return isHit;
     }
@@ -48,6 +74,8 @@ public class Pistol : Weapon
 
     private void Awake()
     {
+        //TODO: cambiare in caso di arma già presente
+        //nell'invetario
         if(weaponTemplate != null) WeaponFirstInit();
     }
     

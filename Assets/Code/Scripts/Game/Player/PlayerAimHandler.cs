@@ -45,7 +45,12 @@ namespace AntoNamespace
 
         void Update()
         {
-                UpdateMouseWorldPosition();
+            UpdateMouseWorldPosition();       
+        }
+
+        void LateUpdate()
+        {
+            playerInventoryHandler.equippedWeapon.GetComponent<Weapon>().UpdateBullet(Time.deltaTime);
         }
 
         void UpdateMouseWorldPosition()

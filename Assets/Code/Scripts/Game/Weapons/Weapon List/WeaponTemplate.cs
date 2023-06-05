@@ -16,10 +16,13 @@ public class WeaponTemplate : ScriptableObject
     [Range(0,1)]
     public float precision;
     public float reloadTime;
+    public float bulletSpeed;
+    public float bulletDrop;
+    public float maxBulletLifeTime;
 
     public Weapon.WeaponCategory category;
     
-    public float shotCooldown;              //Serve per definire il rateo di fuoco
+    public float shotCooldown;              //Serve per definire il rateo di fuoco - firingRate
     public int mainShotCost = 1;
     public int alternativeShotCost;
 
@@ -33,6 +36,11 @@ public class WeaponTemplate : ScriptableObject
     [Header("Suoni")]
     public AudioClip mainShotSound;
     public AudioClip alternativeShotSound;
+    public AudioClip hitSound;
+    [Header("VFX")]
+    public TrailRenderer trailShotEffect;
+    public ParticleSystem hitEffect;
+
     
     [Header("Prefab")]
     [SerializeField] GameObject prefab;
