@@ -18,9 +18,9 @@ MonoBehaviour:
   range: 10
   precision: 0.85
   reloadTime: 0.5
-  bulletSpeed: 0
+  bulletSpeed: 25
   bulletDrop: 0
-  maxBulletLifeTime: 0
+  maxBulletLifeTime: 3
   category: 0
   shotCooldown: 0.35
   mainShotCost: 1

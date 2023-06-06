@@ -64,6 +64,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public int rarity;
 
     [Header("Suoni")]
+    [SerializeField] protected AudioSource audioSource;
     [SerializeField] protected AudioClip mainShotSound;
     [SerializeField] protected AudioClip alternativeShotSound;
     [SerializeField] protected AudioClip hitSound;
@@ -137,8 +138,19 @@ public abstract class Weapon : MonoBehaviour, IEquippable
 
     public void PlaySound(AudioClip clip)
     {
-        float pitch = UnityEngine.Random.Range(0.5f, 2f);
-        AudioSource.PlayClipAtPoint(clip, transform.position, 1f);
+        float pitch = UnityEngine.Random.Range(0.9f, 1.3f);
+        try
+        {
+            audioSource.pitch = pitch;
+            audioSource.PlayOneShot(mainShotSound);
+        }
+        catch
+        {
+            Debug.LogWarning("AudioSource mancante. Suono riprodotto con PlayClipAtPoint.");
+            AudioSource.PlayClipAtPoint(clip, transform.position, 1f);
+        }
+
+        
     }
 
     public void WeaponFirstInit()
@@ -234,7 +246,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
                 effect.transform.forward = hit.normal;
                 effect.Emit(1);
                 bullet.tracer.transform.position = hit.point;
-                bullet.time = maxBulletLifeTime;
+                bullet.time = maxBulletLifeTime;        //Distrugger il proiettile
             }
             catch
             {
@@ -247,8 +259,6 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         {
             bullet.tracer.transform.position = end; //Orribile, ma per ora fa il suo lavoro
         }
-
-        //StartCoroutine(StartShootingCooldown());
     }
 
     protected void DestroyBullet()

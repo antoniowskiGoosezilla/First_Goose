@@ -14,13 +14,15 @@ public class Pistol : Weapon
         
         magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
 
-        /*
+        
         Vector3 velocity = -transform.forward * bulletSpeed;
         Bullet bullet = CreateBullet(muzzle.position, velocity);
         firedBullets.Add(bullet);
-        */
+        //TODO: Rimuovere la gestione dei bullete dall'arma. Metterla sui singoli personaggi o in un'entita' globale
+        //TODO: RIMUOVERE VECCHIA FUNZIONE DI SHOOT
+        
         //Generiamo un raggio per vedere se il proiettile colpisce il nemico
-        if(muzzle == null) muzzle = transform;
+        /*if(muzzle == null) muzzle = transform;
         Ray shot = new Ray(muzzle.position, -transform.forward); 
         RaycastHit hit;
         
@@ -49,9 +51,10 @@ public class Pistol : Weapon
         {
             trail.transform.position = muzzle.position - muzzle.forward * range; //Orribile, ma per ora fa il suo lavoro
         }
-
-        StartCoroutine(StartShootingCooldown());
         return isHit;
+        */
+        StartCoroutine(StartShootingCooldown());
+        return false;
     }
 
     public override void AlternativeShoot()

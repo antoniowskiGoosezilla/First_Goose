@@ -50,7 +50,7 @@ namespace AntoNamespace
 
         void LateUpdate()
         {
-            //playerInventoryHandler.equippedWeapon.GetComponent<Weapon>().UpdateBullet(Time.deltaTime);
+            playerInventoryHandler.equippedWeapon.GetComponent<Weapon>().UpdateBullet(Time.deltaTime);
         }
 
         void UpdateMouseWorldPosition()
@@ -102,6 +102,7 @@ namespace AntoNamespace
 
             
             bool shotResult = usedWeapon.Shoot();
+            //TODO: Cambiare anggiunta dei punti con un evento
             if(shotResult)                  //Se colpiamo un avversario, aggiungiamo i punti;
                 comboHandler.AddPoints(100);
             
