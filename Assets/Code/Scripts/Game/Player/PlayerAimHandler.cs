@@ -48,11 +48,6 @@ namespace AntoNamespace
             UpdateMouseWorldPosition();       
         }
 
-        void LateUpdate()
-        {
-            playerInventoryHandler.equippedWeapon.GetComponent<Weapon>().UpdateBullet(Time.deltaTime);
-        }
-
         void UpdateMouseWorldPosition()
         {
             if(oldMousePosition == AntoNamespace.InputCustomSystem.mouseScreenPosition)

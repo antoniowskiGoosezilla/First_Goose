@@ -14,46 +14,12 @@ public class Pistol : Weapon
         
         magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
 
-        
+        //In questo metodo creaiamo un proiettile per il bullethandler di riferimento.
+        //L'handler si occupa della gestione di tutti i singoli colpi sparati dall'entita'
         Vector3 velocity = -transform.forward * bulletSpeed;
-        Bullet bullet = CreateBullet(muzzle.position, velocity);
-        firedBullets.Add(bullet);
-        //TODO: Rimuovere la gestione dei bullete dall'arma. Metterla sui singoli personaggi o in un'entita' globale
-        //TODO: RIMUOVERE VECCHIA FUNZIONE DI SHOOT
-        
-        //Generiamo un raggio per vedere se il proiettile colpisce il nemico
-        /*if(muzzle == null) muzzle = transform;
-        Ray shot = new Ray(muzzle.position, -transform.forward); 
-        RaycastHit hit;
-        
-        bool isHit = Physics.Raycast(shot, out hit, range, layerMaskToCheck); //Sostituire lo 0 con il layermask su cui fare il controllo
-        TrailRenderer trail = Instantiate(trailShotEffect, transform.position, Quaternion.identity);
-        trail.AddPosition(shot.origin);
+        BulletHandler.Bullet bullet = bulletHandler.CreateBullet(muzzle.position, velocity,bulletDrop, maxBulletLifeTime, trailShotEffect, hitEffect, layerMaskToCheck);
 
-        //Se colpisce
-        if(isHit)
-        {
-            try
-            {
-                ParticleSystem effect = Instantiate(hitEffect, hit.point, Quaternion.identity);
-                effect.transform.forward = hit.normal;
-                effect.Emit(1);
-                trail.transform.position = hit.point;
-            }
-            catch
-            {
-                Debug.LogError("Effetto Hit o Trail mancante");
-            }
-
-            Debug.Log("Colpito");
-        }
-        else
-        {
-            trail.transform.position = muzzle.position - muzzle.forward * range; //Orribile, ma per ora fa il suo lavoro
-        }
-        return isHit;
-        */
-        StartCoroutine(StartShootingCooldown());
+        StartCoroutine(StartShootingCooldown());   //Necessaria per il rateo di fuoco.
         return false;
     }
 
@@ -62,16 +28,16 @@ public class Pistol : Weapon
 
     }
 
+    public override void Equip()
+    {
+        throw new System.NotImplementedException();
+    }
+
     private IEnumerator StartShootingCooldown()
     {
         inCooldown = true;
         yield return new WaitForSeconds(shotCooldown);
         inCooldown = false;
-    }
-
-    public override void Equip()
-    {
-        throw new System.NotImplementedException();
     }
 
 

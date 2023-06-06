@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using AntoNamespace;
 
+[RequireComponent(typeof(ComboHandler))]
+[RequireComponent(typeof(BulletHandler))]
 public class PlayerInventoryHandler : MonoBehaviour
 {
 
@@ -64,6 +66,7 @@ public class PlayerInventoryHandler : MonoBehaviour
 
     private ReloadCanvasHandler reloadCanvas;
     private ComboHandler comboHandler;
+    private BulletHandler bulletHandler;
 
     private bool isReloading;
     private float deltaReloading = 0.3f;
@@ -77,6 +80,7 @@ public class PlayerInventoryHandler : MonoBehaviour
     {
         reloadCanvas = GetComponentInChildren<ReloadCanvasHandler>();
         comboHandler = GetComponent<ComboHandler>();
+        bulletHandler = GetComponent<BulletHandler>();
 
         InputCustomSystem.OnNextWeaponAction += GetNextWeapon;
         InputCustomSystem.OnPreviousWeaponAction += GetPreviousWeapon;
@@ -105,7 +109,10 @@ public class PlayerInventoryHandler : MonoBehaviour
         equippedWeapon.transform.parent = transform.Find("RightHand");
         equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z);
 
-        OnUpdateWeaponAmmo?.Invoke(equippedWeapon.GetComponent<Weapon>().magAmmo, equippedWeapon.GetComponent<Weapon>().totalAmmo, equippedWeapon.GetComponent<Weapon>().maxTotalAmmo);
+        Weapon weaponInfo = equippedWeapon.GetComponent<Weapon>();
+        weaponInfo.SetBulletHandler(bulletHandler);                 //Impostiamo l'handler che si occupa dei proiettili dell'arma
+
+        OnUpdateWeaponAmmo?.Invoke(weaponInfo.magAmmo, weaponInfo.totalAmmo, weaponInfo.maxTotalAmmo);
     }
 
     private void UnequipWeapon()                            //Funzione per rimuovere i modelli 3D quando si cambia o butta un
