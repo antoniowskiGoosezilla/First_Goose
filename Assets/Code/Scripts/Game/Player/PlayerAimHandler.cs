@@ -95,11 +95,8 @@ namespace AntoNamespace
                 return;
             }
 
-            
-            bool shotResult = usedWeapon.Shoot();
-            //TODO: Cambiare anggiunta dei punti con un evento
-            if(shotResult)                  //Se colpiamo un avversario, aggiungiamo i punti;
-                comboHandler.AddPoints(100);
+            //Usiamo l'arma per sparare
+            usedWeapon.Shoot();   //La gestione dei punti è stata spostata nel bullet
             
             OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo);
             //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost); DEPRECATED

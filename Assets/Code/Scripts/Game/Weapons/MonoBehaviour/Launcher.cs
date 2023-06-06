@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Launcher : Weapon
 {
-    public override bool Shoot()
+    public override void Shoot()
     {
         throw new System.NotImplementedException();
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    public override bool Shoot()
+    public override void Shoot()
     {
         if(mainShotSound != null)
             PlaySound(mainShotSound);
@@ -20,7 +20,6 @@ public class Pistol : Weapon
         BulletHandler.Bullet bullet = bulletHandler.CreateBullet(muzzle.position, velocity,bulletDrop, maxBulletLifeTime, trailShotEffect, hitEffect, layerMaskToCheck);
 
         StartCoroutine(StartShootingCooldown());   //Necessaria per il rateo di fuoco.
-        return false;
     }
 
     public override void AlternativeShoot()

@@ -67,7 +67,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     [Header("Utility")]
     [SerializeField] protected Transform muzzle;
 
-    public abstract bool Shoot();
+    public abstract void Shoot();
     public abstract void AlternativeShoot();
     public abstract void Equip();
     

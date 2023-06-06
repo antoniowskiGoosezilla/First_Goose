@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BulletHandler : MonoBehaviour
 {
@@ -17,6 +18,11 @@ public class BulletHandler : MonoBehaviour
         public ParticleSystem hitEffect;
         public LayerMask layerMask;
     }
+
+    //EVENT
+
+    //UNITY EVENT
+    public UnityEvent<float> OnHit;
 
 
     //Crea un proiettile e lo inizializza
@@ -39,13 +45,7 @@ public class BulletHandler : MonoBehaviour
     }
 
 
-    
-    
-    
-    
-    
-    
-    
+
     //Lista dei proiettili sparati e da aggiornare frame dopo frame
     private List<Bullet> firedBullets;
     
@@ -100,6 +100,9 @@ public class BulletHandler : MonoBehaviour
                 effect.Emit(1);
                 bullet.tracer.transform.position = hit.point;
                 bullet.time = bullet.maxBulletLifeTime;        //Distrugger il proiettile
+                
+                //Aggiungiamo i punti in caso di hit    
+                OnHit?.Invoke(100f); //TODO: Sostituire con i punti del personaggio
             }
             catch
             {

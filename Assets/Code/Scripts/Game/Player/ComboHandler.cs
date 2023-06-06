@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.Events;
 
 namespace AntoNamespace
 {    
@@ -23,6 +24,7 @@ namespace AntoNamespace
         //EVENTI
         public static event Action<float, float, string> OnUpdateCombo;
         public static event Action<float> OnUpadateComboTimer;
+        //UNITY EVENTS
 
 
 
