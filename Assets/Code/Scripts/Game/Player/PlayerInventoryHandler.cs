@@ -24,37 +24,39 @@ public class PlayerInventoryHandler : MonoBehaviour
     public static event Action<float, float, float> OnUpdateWeaponAmmo;
     //*************
 
-    public GameObject GetWeapon(int index)
-    {
-        switch(index)
-        {
-            case 0:
-                return inventory.firstWeapon;
-            case 1:
-                return inventory.secondWeapon;
-            case 2:
-                return inventory.meleeWeapon;
-            default:
-                return null;
-        }
-    }
     public void GetNextWeapon(InputAction.CallbackContext context)
     {
+        if(equippedWeapon != null)
+            UnequipWeapon(inventory.weaponIndex);
+        
         inventory.weaponIndex += 1;
         if(inventory.weaponIndex > 2)
             inventory.weaponIndex = 0;
-        UnequipWeapon();
-        EquipWeapon(GetWeapon(inventory.weaponIndex));
 
+        if(GetWeapon(inventory.weaponIndex) == null)
+        {
+            GetNextWeapon(context);
+            return;    
+        }
+
+        EquipWeapon(GetWeaponPrefab(inventory.weaponIndex));
     }
     public void GetPreviousWeapon(InputAction.CallbackContext context)
     {
+        if(equippedWeapon != null)
+            UnequipWeapon(inventory.weaponIndex);
+
         inventory.weaponIndex -= 1;
         if(inventory.weaponIndex < 0)
             inventory.weaponIndex = 2;
         
-        UnequipWeapon();
-        EquipWeapon(GetWeapon(inventory.weaponIndex));
+        if(GetWeapon(inventory.weaponIndex) == null)
+        {
+            GetPreviousWeapon(context);
+            return;    
+        }
+
+        EquipWeapon(GetWeaponPrefab(inventory.weaponIndex));
     }
 
 
@@ -69,7 +71,7 @@ public class PlayerInventoryHandler : MonoBehaviour
     private BulletHandler bulletHandler;
 
     private bool isReloading;
-    private float deltaReloading = 0.3f;
+    private float deltaReloading;
     private float minPerfectReload;
     private float maxPerfectReload;
     private float reloadTimer = 0;
@@ -88,12 +90,12 @@ public class PlayerInventoryHandler : MonoBehaviour
     }
     private void Start()
     {
-        //Da verificare prima se è disponibile un invantario nel Run Manager
+        //Da verificare prima se è disponibile un inventario nel Run Manager
         if(inventory == null)
             inventory = new Inventory();
         
         UnequipWeapon();
-        EquipWeapon(GetWeapon(inventory.weaponIndex));
+        EquipWeapon(GetWeaponPrefab(inventory.weaponIndex));
     }
     private void Update()
     {
@@ -110,13 +112,47 @@ public class PlayerInventoryHandler : MonoBehaviour
         equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z);
 
         Weapon weaponInfo = equippedWeapon.GetComponent<Weapon>();
+
+        if(GetWeaponAmmo(inventory.weaponIndex).isUsed)
+            weaponInfo.RestoreAmmo(GetWeaponAmmo(inventory.weaponIndex));
+
         weaponInfo.SetBulletHandler(bulletHandler);                 //Impostiamo l'handler che si occupa dei proiettili dell'arma
+
+        //Aggiorno il valore del delta per la ricarica perfetta
+        deltaReloading = weaponInfo.reloadTime * 0.15f;
 
         OnUpdateWeaponAmmo?.Invoke(weaponInfo.magAmmo, weaponInfo.totalAmmo, weaponInfo.maxTotalAmmo);
     }
+    private void UnequipWeapon()
+    {
+        Destroy(equippedWeapon);
+    }
+    private void UnequipWeapon(float index)                            //Funzione per rimuovere i modelli 3D quando si cambia o butta un'arma
+    {       
+        switch(index)
+        {
+            case 0:
+                Weapon weaponData = equippedWeapon.GetComponent<Weapon>();
+                inventory.firstWeapon = weaponData.GetWeaponTemplate();
+                inventory.firstWeaponAmmo.isUsed = true;
+                inventory.firstWeaponAmmo.currentMagAmmo = weaponData.magAmmo;
+                inventory.firstWeaponAmmo.totalAmmo = weaponData.totalAmmo;
+                break;
+            case 1:
+                Weapon weaponData2 = equippedWeapon.GetComponent<Weapon>();
+                inventory.secondWeapon = weaponData2.GetWeaponTemplate();
+                inventory.secondWeaponAmmo.isUsed = true;
+                inventory.secondWeaponAmmo.currentMagAmmo = weaponData2.magAmmo;
+                inventory.secondWeaponAmmo.totalAmmo = weaponData2.totalAmmo;
+                 break;
+            case 2:
+                //Weapon weaponData3 = equippedWeapon.GetComponent<Weapon>();
+                //inventory.firstWeapon = weaponData3.GetWeaponTemplate();
+                break;
+            default:
+                 break;
+        }
 
-    private void UnequipWeapon()                            //Funzione per rimuovere i modelli 3D quando si cambia o butta un
-    {                                                       //un'arma
         Destroy(equippedWeapon);
     }
 
@@ -142,8 +178,11 @@ public class PlayerInventoryHandler : MonoBehaviour
             isReloading = true;
             minPerfectReload = UnityEngine.Random.Range(0.45f, usedWeapon.reloadTime - deltaReloading);
             maxPerfectReload = minPerfectReload + deltaReloading;
-            float media = (maxPerfectReload + minPerfectReload)*0.5f;
-            reloadCanvas.UpdateTargetPosition(media, usedWeapon.reloadTime);
+            float media = (maxPerfectReload + minPerfectReload)*0.5f;       //Necessario per trovare il punto medio e aggiornare il canvas di ricarica
+            Debug.Log("Media: " + media);
+            Debug.Log("Min: " + minPerfectReload);
+            Debug.Log("Max: " + maxPerfectReload);
+            reloadCanvas.UpdateTargetPosition(media, usedWeapon.reloadTime, deltaReloading);
 
             reloadCoroutine = StartCoroutine(ReloadQuickTimeEvent(usedWeapon));
             return;
@@ -198,4 +237,44 @@ public class PlayerInventoryHandler : MonoBehaviour
             reloadCanvas.DeactivateReloadSlider();
     }
     
+    private WeaponTemplate GetWeapon(int index)
+    {
+        switch(index)
+        {
+            case 0:
+                return inventory.firstWeapon;
+            case 1:
+                return inventory.secondWeapon;
+            case 2:
+                return inventory.meleeWeapon;
+            default:
+                return null;
+        }
+    }
+    private GameObject GetWeaponPrefab(int index)
+    {
+        switch(index)
+        {
+            case 0:
+                return inventory.firstWeapon.prefab;
+            case 1:
+                return inventory.secondWeapon.prefab;
+            case 2:
+                return inventory.meleeWeapon.prefab;
+            default:
+                return null;
+        }
+    }
+    private Inventory.MagHolder GetWeaponAmmo(int index)
+    {
+        switch(index)
+        {
+            case 0:
+                return inventory.firstWeaponAmmo;
+            case 1:
+                return inventory.secondWeaponAmmo;
+            default:
+                return new Inventory.MagHolder();
+        }
+    }
 }

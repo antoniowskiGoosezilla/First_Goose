@@ -27,8 +27,8 @@ public class WeaponTemplate : ScriptableObject
     public int alternativeShotCost;
 
     [Header("Munizioni")]
-    public float maxMagAmmo;
-    public float maxTotalAmmo;
+    public int maxMagAmmo;
+    public int maxTotalAmmo;
 
     public Weapon.WeaponType type;
     public int rarity;
@@ -43,6 +43,6 @@ public class WeaponTemplate : ScriptableObject
 
     
     [Header("Prefab")]
-    [SerializeField] GameObject prefab;
+    public GameObject prefab;
 
 }

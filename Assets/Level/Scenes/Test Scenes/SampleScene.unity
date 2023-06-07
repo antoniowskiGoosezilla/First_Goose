@@ -439,11 +439,17 @@ MonoBehaviour:
   equippedWeapon: {fileID: 0}
   equippedObject: 
   inventory:
-    firstWeapon: {fileID: 4223220747559628978, guid: 51698fbf050711f4992687483cc41228,
-      type: 3}
-    secondWeapon: {fileID: 9103950076845571717, guid: 0585b36e2086c5a46b00ed3d8a1c285c,
-      type: 3}
+    firstWeapon: {fileID: 11400000, guid: 39f9fff6103ea1e44a5da2e693402236, type: 2}
+    secondWeapon: {fileID: 11400000, guid: 3bbab19807d75fa48a563a6dd284c845, type: 2}
     meleeWeapon: {fileID: 0}
+    firstWeaponAmmo:
+      isUsed: 0
+      currentMagAmmo: 0
+      totalAmmo: 0
+    secondWeaponAmmo:
+      isUsed: 0
+      currentMagAmmo: 0
+      totalAmmo: 0
     weaponIndex: 0
     equippedObject: 
     cassette: []
@@ -1065,7 +1071,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 1.481}
-  m_SizeDelta: {x: 1093, y: 633}
+  m_SizeDelta: {x: 1000, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &271460793
 MonoBehaviour:

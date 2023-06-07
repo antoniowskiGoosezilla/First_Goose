@@ -10,14 +10,26 @@ using System;
 [System.Serializable]
 public class Inventory
 {
-    public GameObject firstWeapon;
-    public GameObject secondWeapon;
-    public GameObject meleeWeapon;
+    [System.Serializable]
+    public struct MagHolder
+    {
+        public bool isUsed;
+        public int currentMagAmmo;
+        public int totalAmmo;
+    }
+
+
+    public WeaponTemplate firstWeapon;
+    public WeaponTemplate secondWeapon;
+    public WeaponTemplate meleeWeapon;
+
+    public MagHolder firstWeaponAmmo;
+    public MagHolder secondWeaponAmmo;
 
     //Indice per ciclare tra le armi
     public int weaponIndex;
 
-    //Sostituire con la classe oggetto
+    //TODO: Sostituire con la classe oggetto
     public string equippedObject;
 
     //Tutti i poweup collezionati
@@ -32,7 +44,7 @@ public class Inventory
         weaponIndex = 0;
         equippedObject = null;
     }
-    public Inventory(GameObject first, GameObject melee)
+    public Inventory(WeaponTemplate first, WeaponTemplate melee)
     {
         firstWeapon = first;
         secondWeapon = null;

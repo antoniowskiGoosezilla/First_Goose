@@ -628,6 +628,7 @@ MonoBehaviour:
   maxTotalAmmo: 0
   type: 0
   rarity: 0
+  firstInit: 1
   audioSource: {fileID: 8023827347216021550}
   mainShotSound: {fileID: 0}
   alternativeShotSound: {fileID: 0}

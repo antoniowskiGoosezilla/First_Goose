@@ -46,13 +46,15 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public int alternativeShotCost;
 
     [Header("Ammo")]
-    public float magAmmo;
-    public float maxMagAmmo;
-    public float totalAmmo;
-    public float maxTotalAmmo;
+    public int magAmmo;
+    public int maxMagAmmo;
+    public int totalAmmo;
+    public int maxTotalAmmo;
 
     public WeaponType type;
     public int rarity;
+
+    public bool firstInit = false;
 
     [Header("Suoni")]
     [SerializeField] protected AudioSource audioSource;
@@ -170,11 +172,56 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         hitEffect = weaponTemplate.hitEffect;
     }
 
+    public void WeaponInit(Weapon weaponDataToCopy)
+    {
+        weaponName = weaponDataToCopy.weaponName;
+        weaponBrand = weaponDataToCopy.weaponBrand;
+        damage = weaponDataToCopy.damage;
+        range = weaponDataToCopy.range;
+        precision = weaponDataToCopy.precision;
+        reloadTime = weaponDataToCopy.reloadTime;
+        bulletSpeed = weaponDataToCopy.bulletSpeed;
+        bulletDrop = weaponDataToCopy.bulletDrop;
+        maxBulletLifeTime = weaponDataToCopy.maxBulletLifeTime;
+        shotCooldown = weaponDataToCopy.shotCooldown;
+        inCooldown = false;
+        mainShotCost = weaponDataToCopy.mainShotCost;
+        alternativeShotCost = weaponDataToCopy.alternativeShotCost;
+        magAmmo = weaponDataToCopy.maxMagAmmo;
+        maxMagAmmo = weaponDataToCopy.maxMagAmmo;
+        totalAmmo = weaponDataToCopy.maxTotalAmmo;
+        maxTotalAmmo = weaponDataToCopy.maxTotalAmmo;
+        type = weaponDataToCopy.type;
+        rarity = weaponDataToCopy.rarity;
+
+        mainShotSound = weaponDataToCopy.mainShotSound;
+        alternativeShotSound = weaponDataToCopy.alternativeShotSound;
+        hitSound = weaponDataToCopy.hitSound;
+
+        trailShotEffect = weaponDataToCopy.trailShotEffect;
+        hitEffect = weaponDataToCopy.hitEffect;
+    }
+
+    public void RestoreAmmo(Inventory.MagHolder ammos)
+    {
+        magAmmo = ammos.currentMagAmmo;
+        totalAmmo = ammos.totalAmmo;
+    }
+    
     public void SetBulletHandler(BulletHandler bulletHandler)
     {
         this.bulletHandler = bulletHandler;
     }
 
+    public WeaponTemplate GetWeaponTemplate()
+    {
+        return this.weaponTemplate;
+    }
+    
+    
+    
+    
+    
     //PRIVATE
     protected static LayerMask layerMaskToCheck = 0x64;
    

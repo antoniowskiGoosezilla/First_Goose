@@ -100,16 +100,14 @@ public class BulletHandler : MonoBehaviour
                 effect.Emit(1);
                 bullet.tracer.transform.position = hit.point;
                 bullet.time = bullet.maxBulletLifeTime;        //Distrugger il proiettile
-                
-                //Aggiungiamo i punti in caso di hit    
-                OnHit?.Invoke(100f); //TODO: Sostituire con i punti del personaggio
             }
             catch
             {
                 Debug.LogError("Effetto Hit o Trail mancante");
             }
-
-            Debug.Log("Colpito");
+            //Aggiungiamo i punti in caso di hit    
+            OnHit?.Invoke(100f); //TODO: Sostituire con i punti del personaggio
+            //Debug.Log("Colpito");
         }
         else
         {

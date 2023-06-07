@@ -40,11 +40,17 @@ public class Pistol : Weapon
     }
 
 
+
+    //Standard 
     private void Awake()
     {
         //TODO: cambiare in caso di arma già presente
         //nell'invetario
-        if(weaponTemplate != null) WeaponFirstInit();
+        if(weaponTemplate != null && firstInit) 
+        {
+            firstInit = false;
+            WeaponFirstInit();
+        };
     }
     
 }
