@@ -626,6 +626,7 @@ MonoBehaviour:
   maxMagAmmo: 0
   totalAmmo: 0
   maxTotalAmmo: 0
+  category: 1
   type: 0
   rarity: 0
   firstInit: 1

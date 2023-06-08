@@ -20,7 +20,6 @@ public class WeaponTemplate : ScriptableObject
     public float bulletDrop;
     public float maxBulletLifeTime;
 
-    public Weapon.WeaponCategory category;
     
     public float shotCooldown;              //Serve per definire il rateo di fuoco - firingRate
     public int mainShotCost = 1;
@@ -30,6 +29,7 @@ public class WeaponTemplate : ScriptableObject
     public int maxMagAmmo;
     public int maxTotalAmmo;
 
+    public Weapon.WeaponCategory category;
     public Weapon.WeaponType type;
     public int rarity;
 

@@ -73,6 +73,15 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""HoldShoot"",
+                    ""type"": ""Button"",
+                    ""id"": ""3a1d3b60-fe0f-402f-940f-4bc781d58037"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""NextWeapon"",
                     ""type"": ""Button"",
                     ""id"": ""c29687f8-3226-4376-af23-feb1b498ffad"",
@@ -290,7 +299,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""305d96aa-d45a-414f-be8e-ad414a228dde"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Shoot"",
@@ -382,6 +391,17 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Reload"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ccfcc0c2-867b-4404-b15d-6f30c0837a07"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldShoot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -596,6 +616,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         m_Game_Roll = m_Game.FindAction("Roll", throwIfNotFound: true);
         m_Game_Interact = m_Game.FindAction("Interact", throwIfNotFound: true);
         m_Game_Shoot = m_Game.FindAction("Shoot", throwIfNotFound: true);
+        m_Game_HoldShoot = m_Game.FindAction("HoldShoot", throwIfNotFound: true);
         m_Game_NextWeapon = m_Game.FindAction("NextWeapon", throwIfNotFound: true);
         m_Game_PreviousWeapon = m_Game.FindAction("PreviousWeapon", throwIfNotFound: true);
         m_Game_SpecificWeapon = m_Game.FindAction("SpecificWeapon", throwIfNotFound: true);
@@ -670,6 +691,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
     private readonly InputAction m_Game_Roll;
     private readonly InputAction m_Game_Interact;
     private readonly InputAction m_Game_Shoot;
+    private readonly InputAction m_Game_HoldShoot;
     private readonly InputAction m_Game_NextWeapon;
     private readonly InputAction m_Game_PreviousWeapon;
     private readonly InputAction m_Game_SpecificWeapon;
@@ -683,6 +705,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         public InputAction @Roll => m_Wrapper.m_Game_Roll;
         public InputAction @Interact => m_Wrapper.m_Game_Interact;
         public InputAction @Shoot => m_Wrapper.m_Game_Shoot;
+        public InputAction @HoldShoot => m_Wrapper.m_Game_HoldShoot;
         public InputAction @NextWeapon => m_Wrapper.m_Game_NextWeapon;
         public InputAction @PreviousWeapon => m_Wrapper.m_Game_PreviousWeapon;
         public InputAction @SpecificWeapon => m_Wrapper.m_Game_SpecificWeapon;
@@ -711,6 +734,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                 @Shoot.started -= m_Wrapper.m_GameActionsCallbackInterface.OnShoot;
                 @Shoot.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnShoot;
                 @Shoot.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnShoot;
+                @HoldShoot.started -= m_Wrapper.m_GameActionsCallbackInterface.OnHoldShoot;
+                @HoldShoot.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnHoldShoot;
+                @HoldShoot.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnHoldShoot;
                 @NextWeapon.started -= m_Wrapper.m_GameActionsCallbackInterface.OnNextWeapon;
                 @NextWeapon.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnNextWeapon;
                 @NextWeapon.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnNextWeapon;
@@ -742,6 +768,9 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
                 @Shoot.started += instance.OnShoot;
                 @Shoot.performed += instance.OnShoot;
                 @Shoot.canceled += instance.OnShoot;
+                @HoldShoot.started += instance.OnHoldShoot;
+                @HoldShoot.performed += instance.OnHoldShoot;
+                @HoldShoot.canceled += instance.OnHoldShoot;
                 @NextWeapon.started += instance.OnNextWeapon;
                 @NextWeapon.performed += instance.OnNextWeapon;
                 @NextWeapon.canceled += instance.OnNextWeapon;
@@ -831,6 +860,7 @@ public partial class @PlayerInputSystem : IInputActionCollection2, IDisposable
         void OnRoll(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnHoldShoot(InputAction.CallbackContext context);
         void OnNextWeapon(InputAction.CallbackContext context);
         void OnPreviousWeapon(InputAction.CallbackContext context);
         void OnSpecificWeapon(InputAction.CallbackContext context);

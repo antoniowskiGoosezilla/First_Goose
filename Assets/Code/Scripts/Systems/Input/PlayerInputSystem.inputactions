@@ -51,6 +51,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "HoldShoot",
+                    "type": "Button",
+                    "id": "3a1d3b60-fe0f-402f-940f-4bc781d58037",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "NextWeapon",
                     "type": "Button",
                     "id": "c29687f8-3226-4376-af23-feb1b498ffad",
@@ -268,7 +277,7 @@
                     "name": "",
                     "id": "305d96aa-d45a-414f-be8e-ad414a228dde",
                     "path": "<Mouse>/leftButton",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "",
                     "action": "Shoot",
@@ -360,6 +369,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Reload",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ccfcc0c2-867b-4404-b15d-6f30c0837a07",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldShoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

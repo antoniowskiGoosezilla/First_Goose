@@ -37,10 +37,13 @@ namespace AntoNamespace
         //durante le interazioni il giocatore non deve potersi muovere
         public static bool isInteracting;
 
+        public static bool holdingShoot = false;
+
         //Azioni che vengono triggerate in caso di pressione di tasti
         //Altri moduli possono accedervi senza avere un riferimento alla classe
         public static event Action<InputAction.CallbackContext> OnRollAction;
-        public static event Action<InputAction.CallbackContext> OnShootAction;
+        public static event Action<InputAction.CallbackContext> OnShootAction;              //Shooting semplice (pistole)
+        public static event Action<InputAction.CallbackContext> OnHoldShootAction;          //Shooting tenendo premuto (fucili o charger)
         public static event Action<InputAction.CallbackContext> OnNextWeaponAction;
         public static event Action<InputAction.CallbackContext> OnPreviousWeaponAction;
         public static event Action<InputAction.CallbackContext> OnSpecificWeaponAction;
@@ -48,6 +51,8 @@ namespace AntoNamespace
         
         public static event Action<InputAction.CallbackContext> OnTest;
 
+        
+        
         #region PRIVATE
         private static bool isInit = false;
         private static PlayerInputSystem inputAction;  
@@ -60,13 +65,6 @@ namespace AntoNamespace
 
         public static void Init()
         {
-           /*if(instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-            instance = this;
-            DontDestroyOnLoad(gameObject);*/
 
             if(isInit)
                 return;
@@ -92,17 +90,6 @@ namespace AntoNamespace
         }
 
 
-        /*void OnDisable()
-        {
-            inputAction.Disable();
-        }
-
-        void Awake(){}
-
-        void Start(){}
-
-        void Update(){}*/
-
         #region SET UP FUNCTIONS
         static void SetUpMovementInput(){
             inputAction.Game.Movement.started += OnMoveInput;
@@ -126,6 +113,14 @@ namespace AntoNamespace
         static void SetUpShootInput()
         {
             inputAction.Game.Shoot.performed += OnShootAction;
+            inputAction.Game.HoldShoot.performed += context => {
+                holdingShoot = context.ReadValueAsButton();
+                OnHoldShootAction?.Invoke(context);
+            };
+
+            inputAction.Game.HoldShoot.canceled += context => {
+                if(holdingShoot) holdingShoot = false;
+            };
             inputAction.Game.Reload.performed += OnReloadAction;
         }
         static void SetUpChangeWeaponInput()
@@ -173,6 +168,7 @@ namespace AntoNamespace
             }
                 
     }
+        //Controller
         static void OnControllerChange(InputDevice device, InputDeviceChange change)
         {
             switch (change)

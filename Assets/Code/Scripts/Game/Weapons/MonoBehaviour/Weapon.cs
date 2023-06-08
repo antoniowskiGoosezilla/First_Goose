@@ -51,6 +51,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public int totalAmmo;
     public int maxTotalAmmo;
 
+    public WeaponCategory category;
     public WeaponType type;
     public int rarity;
 
@@ -161,6 +162,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         maxMagAmmo = weaponTemplate.maxMagAmmo;
         totalAmmo = weaponTemplate.maxTotalAmmo;
         maxTotalAmmo = weaponTemplate.maxTotalAmmo;
+        category = weaponTemplate.category;
         type = weaponTemplate.type;
         rarity = weaponTemplate.rarity;
 
@@ -226,6 +228,25 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     protected static LayerMask layerMaskToCheck = 0x64;
    
     protected BulletHandler bulletHandler;
+
+
+    protected IEnumerator StartShootingCooldown()
+    {
+        inCooldown = true;
+        yield return new WaitForSeconds(shotCooldown);
+        inCooldown = false;
+    }
+
+    protected void Awake()
+    {
+        //TODO: cambiare in caso di arma già presente
+        //nell'invetario
+        if(weaponTemplate != null && firstInit) 
+        {
+            firstInit = false;
+            WeaponFirstInit();
+        };
+    }
     
 
 

@@ -34,21 +34,22 @@ namespace AntoNamespace
 
 
 
-        void Awake()
+        private void Awake()
         {
             playerInventoryHandler = GetComponent<PlayerInventoryHandler>();
             playerStatsHandler = GetComponent<PlayerStatsHandler>();
             comboHandler = GetComponent<ComboHandler>();
 
             InputCustomSystem.OnShootAction += Shoot;
+            InputCustomSystem.OnHoldShootAction += HoldShoot;
         }
 
-        void Update()
+        private void Update()
         {
-            UpdateMouseWorldPosition();       
+            UpdateMouseWorldPosition();      
         }
 
-        void UpdateMouseWorldPosition()
+        private void UpdateMouseWorldPosition()
         {
             if(oldMousePosition == AntoNamespace.InputCustomSystem.mouseScreenPosition)
                 return;
@@ -68,26 +69,21 @@ namespace AntoNamespace
 
         //Funzioni per lo sparo
         //Considerare la possibilità di spostare queste funzioni nella classe delle armi
-        void Shoot(InputAction.CallbackContext context)
+        private void Shoot(InputAction.CallbackContext context)
         {
             Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
-            if(usedWeapon == null)
-                return;
-            
-            if(playerStatsHandler.availableActionStacks <= 0)
-                return;
-            
-            if(usedWeapon.mainShotCost > playerStatsHandler.availableActionStacks)
-                return;
-                
-            if(usedWeapon.inCooldown)
-                return;
 
+            if(CheckPreShot(usedWeapon) == false)
+                return;
+            //Queste armi usano un altro tipo di funzione di sparo
+            if(usedWeapon.category == Weapon.WeaponCategory.RIFLE || usedWeapon.category == Weapon.WeaponCategory.CHARGER || usedWeapon.category == Weapon.WeaponCategory.LASER)
+                return;
+            
             //Ruotiamo il modello nella direzione dello sparo se usiamo mouse + tastiera
             if(InputCustomSystem.controllerType == InputCustomSystem.ControllerType.KEYBOARD)
                 transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
 
-            
+
             if(usedWeapon.magAmmo == 0)
             {
                 //Aggiungere suono caricatore scarico
@@ -102,5 +98,63 @@ namespace AntoNamespace
             //playerStatsHandler.SetAvailableActionStacks(playerStatsHandler.availableActionStacks - usedWeapon.mainShotCost); DEPRECATED
             playerStatsHandler.RemoveActionStacks(usedWeapon.mainShotCost);
         }
-    }
+        
+        private void HoldShoot(InputAction.CallbackContext context)
+        {
+            Weapon usedWeapon = playerInventoryHandler.equippedWeapon.GetComponent<Weapon>();
+
+            if(CheckPreShot(usedWeapon) == false)
+                return;
+
+            //Queste armi usano un altro tipo di funzione di sparo
+            if(usedWeapon.category == Weapon.WeaponCategory.PISTOL || usedWeapon.category == Weapon.WeaponCategory.SHOTGUN || usedWeapon.category == Weapon.WeaponCategory.LAUNCHER)
+                return;
+
+            //Hard code ---- CERCARE MODO DI SPECIFICARE TRAMITE INTERFACCIA
+            if(usedWeapon.category == Weapon.WeaponCategory.RIFLE)
+            {
+                Rifle rifle = playerInventoryHandler.equippedWeapon.GetComponent<Rifle>();
+                rifle.OnHold();
+                Debug.Log("Call");
+            }
+            StartCoroutine(RotateModel());
+            playerStatsHandler.RemoveActionStacks(usedWeapon.mainShotCost);
+            OnUpdateWeaponAmmo?.Invoke(usedWeapon.magAmmo, usedWeapon.totalAmmo);
+                
+        }
+
+        private bool CheckPreShot(Weapon usedWeapon)
+        {
+
+            if(usedWeapon == null)
+                return false;
+
+            if(playerStatsHandler.availableActionStacks <= 0)
+                return false;
+            
+            if(usedWeapon.mainShotCost > playerStatsHandler.availableActionStacks)
+                return false;
+                
+            if(usedWeapon.inCooldown)
+                return false;
+
+            if(usedWeapon.magAmmo == 0)
+            {
+                //Aggiungere suono caricatore scarico
+                Debug.Log("Caricatore scarico");
+                return false;
+            }
+
+            return true;
+        }
+    
+        private IEnumerator RotateModel()
+        {
+            while(InputCustomSystem.holdingShoot)
+            {
+                transform.forward = new Vector3(mouseWorldPosition.x - transform.position.x, 0, mouseWorldPosition.z - transform.position.z);
+                yield return null;
+            }
+        }
+    }   
 }

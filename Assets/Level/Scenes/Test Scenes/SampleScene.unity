@@ -440,7 +440,7 @@ MonoBehaviour:
   equippedObject: 
   inventory:
     firstWeapon: {fileID: 11400000, guid: 39f9fff6103ea1e44a5da2e693402236, type: 2}
-    secondWeapon: {fileID: 11400000, guid: 3bbab19807d75fa48a563a6dd284c845, type: 2}
+    secondWeapon: {fileID: 11400000, guid: aba10f012636d154eb7d8611830cd748, type: 2}
     meleeWeapon: {fileID: 0}
     firstWeaponAmmo:
       isUsed: 0

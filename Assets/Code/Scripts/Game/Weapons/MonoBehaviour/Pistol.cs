@@ -16,7 +16,7 @@ public class Pistol : Weapon
 
         //In questo metodo creaiamo un proiettile per il bullethandler di riferimento.
         //L'handler si occupa della gestione di tutti i singoli colpi sparati dall'entita'
-        Vector3 velocity = -transform.forward * bulletSpeed;
+        Vector3 velocity = -muzzle.forward* bulletSpeed;
         BulletHandler.Bullet bullet = bulletHandler.CreateBullet(muzzle.position, velocity,bulletDrop, maxBulletLifeTime, trailShotEffect, hitEffect, layerMaskToCheck);
 
         StartCoroutine(StartShootingCooldown());   //Necessaria per il rateo di fuoco.
@@ -30,13 +30,6 @@ public class Pistol : Weapon
     public override void Equip()
     {
         throw new System.NotImplementedException();
-    }
-
-    private IEnumerator StartShootingCooldown()
-    {
-        inCooldown = true;
-        yield return new WaitForSeconds(shotCooldown);
-        inCooldown = false;
     }
 
 
