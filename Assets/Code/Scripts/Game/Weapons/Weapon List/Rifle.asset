@@ -36,4 +36,4 @@ MonoBehaviour:
     type: 3}
   hitEffect: {fileID: 8791385543820909159, guid: db5d6c92dee50cd4db277b57712fd473,
     type: 3}
-  prefab: {fileID: 8318641520663865621, guid: 3e27c5cb4a77d534d9ca77aa954a2164, type: 3}
+  prefab: {fileID: 7641994820042227057, guid: 925141c23ff48904c95102ed0ec0b689, type: 3}
