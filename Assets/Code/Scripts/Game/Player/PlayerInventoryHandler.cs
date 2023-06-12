@@ -63,7 +63,6 @@ public class PlayerInventoryHandler : MonoBehaviour
 
 
 
-
     //PRIVATE
 
     private ReloadCanvasHandler reloadCanvas;

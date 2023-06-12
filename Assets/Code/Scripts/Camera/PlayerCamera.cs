@@ -4,8 +4,15 @@ using UnityEngine;
 
 namespace AntoNamespace
 {
+    //***DEPRECATED***\
+    /*
+        Lo script seguente è stato rimpiazzato da Cinemachine.
+        Per qualsiasi cosa relativa alla camera usare cinemachine e le
+        camere virtuali
+    */
 
-    //Questo scripe serve ad implementare il movimento della camera di gioco
+
+    //Questo script serve ad implementare il movimento della camera di gioco
     //in modo che segui sempre il giocatore. 
     //L'angolazione può essere impostata tramite le due variabili per gli angoli
     public class PlayerCamera : MonoBehaviour

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class Pistol : Weapon
 {
@@ -18,6 +19,11 @@ public class Pistol : Weapon
         //L'handler si occupa della gestione di tutti i singoli colpi sparati dall'entita'
         Vector3 velocity = -muzzle.forward* bulletSpeed;
         BulletHandler.Bullet bullet = bulletHandler.CreateBullet(muzzle.position, velocity,bulletDrop, maxBulletLifeTime, trailShotEffect, hitEffect, layerMaskToCheck);
+        
+        //Camera Shake
+        CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CameraShake>().Shake(1f, .2f);
+        
+
 
         StartCoroutine(StartShootingCooldown());   //Necessaria per il rateo di fuoco.
     }
@@ -30,20 +36,6 @@ public class Pistol : Weapon
     public override void Equip()
     {
         throw new System.NotImplementedException();
-    }
-
-
-
-    //Standard 
-    private void Awake()
-    {
-        //TODO: cambiare in caso di arma già presente
-        //nell'invetario
-        if(weaponTemplate != null && firstInit) 
-        {
-            firstInit = false;
-            WeaponFirstInit();
-        };
     }
     
 }

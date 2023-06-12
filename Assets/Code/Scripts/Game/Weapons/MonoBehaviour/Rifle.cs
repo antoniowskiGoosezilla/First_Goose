@@ -12,8 +12,6 @@ public class Rifle : Weapon, IHoldable
         
         if(shotEffect != null)
             shotEffect.Play();
-        
-        magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
 
         //In questo metodo creaiamo un proiettile per il bullethandler di riferimento.
         //L'handler si occupa della gestione di tutti i singoli colpi sparati dall'entita'
@@ -46,6 +44,7 @@ public class Rifle : Weapon, IHoldable
 
     private IEnumerator PreparingHoldShot()
     {
+        magAmmo -= 1;
         float shotPrecision = 0;
         while(InputCustomSystem.holdingShoot)
         {
