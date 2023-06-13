@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.17540352, g: 0.21182163, b: 0.25813183, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -439,8 +439,8 @@ MonoBehaviour:
   equippedWeapon: {fileID: 0}
   equippedObject: 
   inventory:
-    firstWeapon: {fileID: 11400000, guid: 39f9fff6103ea1e44a5da2e693402236, type: 2}
-    secondWeapon: {fileID: 11400000, guid: aba10f012636d154eb7d8611830cd748, type: 2}
+    firstWeapon: {fileID: 11400000, guid: eca1c2f1b8a1c9d4c9807efdc39288c7, type: 2}
+    secondWeapon: {fileID: 11400000, guid: 6ad0325736d0c764789ed48b5cac48cb, type: 2}
     meleeWeapon: {fileID: 0}
     firstWeaponAmmo:
       isUsed: 0
@@ -1559,14 +1559,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.103423, y: 0.088413335, z: -0.009230209, w: 0.99065715}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 11.92, y: 730.2, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3055,30 +3055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dd754b7d3667e41aa08b9b9ac646c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shake:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 10
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1184440394
 GameObject:
   m_ObjectHideFlags: 0

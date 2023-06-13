@@ -10,32 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d88358f508eaf0542b02040bdadf554c, type: 3}
-  m_Name: Rifle
+  m_Name: ElderPistol
   m_EditorClassIdentifier: 
-  weaponName: Rifle
-  weaponBrand: Rifle
-  damage: 2
-  range: 20
-  precision: 1
+  weaponName: Pistol
+  weaponBrand: Elder
+  damage: 1
+  range: 5
+  precision: 0.497
   reloadTime: 1
-  bulletSpeed: 100
+  bulletSpeed: 10
   bulletDrop: 0
-  maxBulletLifeTime: 1
-  shotCooldown: 0.2
+  maxBulletLifeTime: 20
+  shotCooldown: 0.1
   mainShotCost: 1
   alternativeShotCost: 0
-  maxMagAmmo: 4
-  maxTotalAmmo: 40
-  category: 1
-  type: 0
+  maxMagAmmo: 20
+  maxTotalAmmo: 200
+  category: 0
+  type: 2
   rarity: 1
   mainShotSound: {fileID: 8300000, guid: 2edfae1375f084df4b61a0ad70c30fb5, type: 3}
   alternativeShotSound: {fileID: 0}
   hitSound: {fileID: 0}
   shotEffect: {fileID: 8791385543820909159, guid: 33aa31ecec2776348a855a1c0a25f692,
     type: 3}
-  trailShotEffect: {fileID: 5793271232614545402, guid: 4a9a06f1169250745806dae94b4d5a70,
+  trailShotEffect: {fileID: 5793271232614545402, guid: 23b33fe107f06c04196f0bfd53723276,
     type: 3}
   hitEffect: {fileID: 8791385543820909159, guid: db5d6c92dee50cd4db277b57712fd473,
     type: 3}
-  prefab: {fileID: 7641994820042227057, guid: 925141c23ff48904c95102ed0ec0b689, type: 3}
+  prefab: {fileID: 8736510299512702937, guid: 9383e38b74f18f74e8a221930ac0a151, type: 3}

@@ -55,18 +55,17 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     public WeaponType type;
     public int rarity;
 
-    public bool firstInit = false;
+    public bool firstInit = true;
 
     [Header("Suoni")]
     [SerializeField] protected AudioSource audioSource;
-    [SerializeField] protected AudioClip mainShotSound;
-    [SerializeField] protected AudioClip alternativeShotSound;
-    [SerializeField] protected AudioClip hitSound;
-    [Header("VFX")]
-    [SerializeField] protected ParticleSystem shotEffect;
-    [SerializeField] protected TrailRenderer trailShotEffect;
-    [SerializeField] protected ParticleSystem hitEffect;
-    [Space]
+    protected AudioClip mainShotSound;
+    protected AudioClip alternativeShotSound;
+    protected AudioClip hitSound;
+    public ParticleSystem shotEffect;
+    protected TrailRenderer trailShotEffect;
+    protected ParticleSystem hitEffect;
+    
     [Header("Utility")]
     [SerializeField] protected Transform muzzle;
 
@@ -200,6 +199,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         alternativeShotSound = weaponDataToCopy.alternativeShotSound;
         hitSound = weaponDataToCopy.hitSound;
 
+        shotEffect = weaponDataToCopy.shotEffect as ParticleSystem;
         trailShotEffect = weaponDataToCopy.trailShotEffect;
         hitEffect = weaponDataToCopy.hitEffect;
     }

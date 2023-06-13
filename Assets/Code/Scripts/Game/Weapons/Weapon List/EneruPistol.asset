@@ -32,6 +32,8 @@ MonoBehaviour:
   mainShotSound: {fileID: 8300000, guid: 29872201bee5c4d73bc9988c0b622719, type: 3}
   alternativeShotSound: {fileID: 0}
   hitSound: {fileID: 0}
+  shotEffect: {fileID: 8791385543820909159, guid: 33aa31ecec2776348a855a1c0a25f692,
+    type: 3}
   trailShotEffect: {fileID: 5793271232614545402, guid: 23b33fe107f06c04196f0bfd53723276,
     type: 3}
   hitEffect: {fileID: 8791385543820909159, guid: db5d6c92dee50cd4db277b57712fd473,

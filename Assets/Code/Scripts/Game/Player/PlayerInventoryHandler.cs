@@ -178,9 +178,6 @@ public class PlayerInventoryHandler : MonoBehaviour
             minPerfectReload = UnityEngine.Random.Range(0.45f, usedWeapon.reloadTime - deltaReloading);
             maxPerfectReload = minPerfectReload + deltaReloading;
             float media = (maxPerfectReload + minPerfectReload)*0.5f;       //Necessario per trovare il punto medio e aggiornare il canvas di ricarica
-            Debug.Log("Media: " + media);
-            Debug.Log("Min: " + minPerfectReload);
-            Debug.Log("Max: " + maxPerfectReload);
             reloadCanvas.UpdateTargetPosition(media, usedWeapon.reloadTime, deltaReloading);
 
             reloadCoroutine = StartCoroutine(ReloadQuickTimeEvent(usedWeapon));

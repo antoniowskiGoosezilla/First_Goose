@@ -11,7 +11,12 @@ public class Pistol : Weapon
             PlaySound(mainShotSound);
         
         if(shotEffect != null)
-            shotEffect.Play();
+        {
+            Debug.Log("Not Null");
+            ParticleSystem effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
+            effect.transform.forward = muzzle.forward;
+            effect.Emit(1);
+        }
         
         magAmmo -= 1;                                                         //Togliamo un colpo al caricatore
 
