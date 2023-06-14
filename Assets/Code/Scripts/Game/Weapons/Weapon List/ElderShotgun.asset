@@ -26,7 +26,7 @@ MonoBehaviour:
   alternativeShotCost: 0
   maxMagAmmo: 5
   maxTotalAmmo: 20
-  category: 0
+  category: 2
   type: 2
   rarity: 2
   mainShotSound: {fileID: 8300000, guid: 29872201bee5c4d73bc9988c0b622719, type: 3}

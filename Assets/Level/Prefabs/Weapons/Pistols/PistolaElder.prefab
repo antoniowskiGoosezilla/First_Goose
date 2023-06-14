@@ -779,12 +779,7 @@ MonoBehaviour:
   rarity: 0
   firstInit: 1
   audioSource: {fileID: 0}
-  mainShotSound: {fileID: 0}
-  alternativeShotSound: {fileID: 0}
-  hitSound: {fileID: 0}
   shotEffect: {fileID: 2089239317013530367}
-  trailShotEffect: {fileID: 0}
-  hitEffect: {fileID: 0}
   muzzle: {fileID: 9020844507600979617}
 --- !u!1001 &7421719448319171736
 PrefabInstance:

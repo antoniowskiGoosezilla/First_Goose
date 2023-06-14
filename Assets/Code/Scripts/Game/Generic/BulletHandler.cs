@@ -19,10 +19,12 @@ public class BulletHandler : MonoBehaviour
         public LayerMask layerMask;
     }
 
+    /*** PUBLIC ***/
     //EVENT
 
     //UNITY EVENT
     public UnityEvent<float> OnHit;
+
 
 
     //Crea un proiettile e lo inizializza
@@ -44,14 +46,35 @@ public class BulletHandler : MonoBehaviour
         return bullet;
     }
 
+    //Funzione specifica per gli shotgun.
+    //Non viene creato un vero e proprio proiettile, ma viene creata una checkbox
+    //davanti al player per controllare se il colpo colpisce o meno qualcuno
+    public void CreateShotgunBullet(Transform center, float range, LayerMask layerMasktoCheck)
+    {
+        float halfDimension = range*.5f;
+        //Aggiustare posizione box
+        bool isHit = Physics.CheckBox(new Vector3(center.position.x, center.position.y, center.position.z) - center.forward*halfDimension, new Vector3(halfDimension, halfDimension, halfDimension), Quaternion.identity, layerMasktoCheck);
+        //ExtDebug.DrawBox(new Vector3(center.position.x, center.position.y, center.position.z) - center.forward*halfDimension, new Vector3(halfDimension, halfDimension, halfDimension), Quaternion.identity, Color.red);
+        if(isHit)
+        {
+            //Aggiungiamo i punti in caso di hit    
+            OnHit?.Invoke(100f); //TODO: Sostituire con i punti del personaggio
+            Debug.Log("Colpito");
+        }
+    }
 
+
+
+
+
+    /*** PRIVATE ***/
 
     //Lista dei proiettili sparati e da aggiornare frame dopo frame
     private List<Bullet> firedBullets;
     
 
 
-
+    //Aggiunge un proiettile da gestire nell'array di proiettili
     private void AddBullet(Bullet bullet)
     {
         firedBullets.Add(bullet);
@@ -63,6 +86,7 @@ public class BulletHandler : MonoBehaviour
         Vector3 gravity = Vector3.down * bullet.bulletDrop;
         return bullet.initialPosition + bullet.initialVelocity*bullet.time + .5f*gravity*Mathf.Pow(bullet.time,2);
     }
+    
     //Serve ad aggiornare la posizione dei proiettili ad ogni frame
     private void UpdateBullet(float delta)
     {
@@ -125,15 +149,15 @@ public class BulletHandler : MonoBehaviour
 
 
 
+    
+    //Standard
 
-
-    void Start()
+    private void Awake()
     {
         firedBullets = new List<Bullet>();
     }
 
-    
-    void Update()
+    private void Update()
     {
         UpdateBullet(Time.deltaTime);
     }

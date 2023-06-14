@@ -169,6 +169,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         alternativeShotSound = weaponTemplate.alternativeShotSound;
         hitSound = weaponTemplate.hitSound;
 
+        shotEffect = weaponTemplate.shotEffect;
         trailShotEffect = weaponTemplate.trailShotEffect;
         hitEffect = weaponTemplate.hitEffect;
     }
