@@ -11,7 +11,10 @@ public class Rifle : Weapon, IHoldable
             PlaySound(mainShotSound);
         
         if(shotEffect != null)
-            shotEffect.Play();
+        {
+            GameObject muzzleEffect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
+        }
+            
 
         //In questo metodo creaiamo un proiettile per il bullethandler di riferimento.
         //L'handler si occupa della gestione di tutti i singoli colpi sparati dall'entita'

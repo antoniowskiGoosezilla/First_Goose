@@ -38,9 +38,9 @@ public class WeaponTemplate : ScriptableObject
     public AudioClip alternativeShotSound;
     public AudioClip hitSound;
     [Header("VFX")]
-    public ParticleSystem shotEffect;
-    public TrailRenderer trailShotEffect;
-    public ParticleSystem hitEffect;
+    public GameObject shotEffect;
+    public GameObject trailShotEffect;
+    public GameObject hitEffect;
 
     
     [Header("Prefab")]

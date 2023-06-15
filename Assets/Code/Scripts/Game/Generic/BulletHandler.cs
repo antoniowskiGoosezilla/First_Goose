@@ -14,8 +14,8 @@ public class BulletHandler : MonoBehaviour
         public float bulletDrop;
         public float maxBulletLifeTime;
         public Transform muzzle;
-        public TrailRenderer tracer;
-        public ParticleSystem hitEffect;
+        public GameObject tracer;
+        public GameObject hitEffect;
         public LayerMask layerMask;
     }
 
@@ -28,7 +28,7 @@ public class BulletHandler : MonoBehaviour
 
 
     //Crea un proiettile e lo inizializza
-    public Bullet CreateBullet(Vector3 position, Vector3 velocity, float bulletDrop, float maxBulletLifeTime, TrailRenderer trailShotEffect, ParticleSystem hitEffect, LayerMask layerMaskToCheck)
+    public Bullet CreateBullet(Vector3 position, Vector3 velocity, float bulletDrop, float maxBulletLifeTime, GameObject trailShotEffect, GameObject hitEffect, LayerMask layerMaskToCheck)
     {
         Bullet bullet = new Bullet();
         bullet.initialPosition = position;
@@ -37,7 +37,8 @@ public class BulletHandler : MonoBehaviour
         bullet.maxBulletLifeTime = maxBulletLifeTime;
         bullet.time = 0;
         bullet.tracer = Instantiate(trailShotEffect, position, Quaternion.identity);
-        bullet.tracer.AddPosition(position);
+        bullet.tracer.transform.forward = velocity.normalized;
+        //bullet.tracer.AddPosition(position);
         bullet.hitEffect = hitEffect;
         bullet.layerMask = layerMaskToCheck;
 
@@ -119,10 +120,11 @@ public class BulletHandler : MonoBehaviour
         {
             try
             {
-                ParticleSystem effect = Instantiate(bullet.hitEffect, hit.point, Quaternion.identity);
+                GameObject effect = Instantiate(bullet.hitEffect, hit.point, Quaternion.identity);
                 effect.transform.forward = hit.normal;
-                effect.Emit(1);
+                //effect.Emit(1);
                 bullet.tracer.transform.position = hit.point;
+                Destroy(bullet.tracer);
                 bullet.time = bullet.maxBulletLifeTime;        //Distrugger il proiettile
             }
             catch

@@ -13,9 +13,9 @@ public class Pistol : Weapon
         if(shotEffect != null)
         {
             Debug.Log("Not Null");
-            ParticleSystem effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
-            effect.transform.forward = muzzle.forward;
-            effect.Emit(1);
+            GameObject effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
+            effect.transform.localScale *= .5f;             //Da cambiare
+            effect.transform.forward = -muzzle.forward;
         }
         
         magAmmo -= 1;                                                         //Togliamo un colpo al caricatore

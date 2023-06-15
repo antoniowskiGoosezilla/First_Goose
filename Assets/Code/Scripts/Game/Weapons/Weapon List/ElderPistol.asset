@@ -32,10 +32,10 @@ MonoBehaviour:
   mainShotSound: {fileID: 8300000, guid: 2edfae1375f084df4b61a0ad70c30fb5, type: 3}
   alternativeShotSound: {fileID: 0}
   hitSound: {fileID: 0}
-  shotEffect: {fileID: 8791385543820909159, guid: 33aa31ecec2776348a855a1c0a25f692,
+  shotEffect: {fileID: 3875329135514961720, guid: 09e753e00edbb714ebf549c2dd326f01,
     type: 3}
-  trailShotEffect: {fileID: 5793271232614545402, guid: 23b33fe107f06c04196f0bfd53723276,
+  trailShotEffect: {fileID: 8530891135317232908, guid: 0318a5d4e9f35b3499c3a51e7e053320,
     type: 3}
-  hitEffect: {fileID: 8791385543820909159, guid: db5d6c92dee50cd4db277b57712fd473,
+  hitEffect: {fileID: 3291244538907713110, guid: 4e25fca77bf9f0f4b810156a77203cb3,
     type: 3}
   prefab: {fileID: 8736510299512702937, guid: 9383e38b74f18f74e8a221930ac0a151, type: 3}

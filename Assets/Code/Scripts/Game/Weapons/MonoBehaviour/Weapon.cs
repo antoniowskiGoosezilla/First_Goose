@@ -62,9 +62,9 @@ public abstract class Weapon : MonoBehaviour, IEquippable
     protected AudioClip mainShotSound;
     protected AudioClip alternativeShotSound;
     protected AudioClip hitSound;
-    public ParticleSystem shotEffect;
-    protected TrailRenderer trailShotEffect;
-    protected ParticleSystem hitEffect;
+    public GameObject shotEffect;
+    protected GameObject trailShotEffect;
+    protected GameObject hitEffect;
     
     [Header("Utility")]
     [SerializeField] protected Transform muzzle;
@@ -200,7 +200,7 @@ public abstract class Weapon : MonoBehaviour, IEquippable
         alternativeShotSound = weaponDataToCopy.alternativeShotSound;
         hitSound = weaponDataToCopy.hitSound;
 
-        shotEffect = weaponDataToCopy.shotEffect as ParticleSystem;
+        shotEffect = weaponDataToCopy.shotEffect;
         trailShotEffect = weaponDataToCopy.trailShotEffect;
         hitEffect = weaponDataToCopy.hitEffect;
     }

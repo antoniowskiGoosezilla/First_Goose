@@ -15,9 +15,9 @@ public class Shotgun : Weapon
         if(shotEffect != null)
         {
             Debug.Log("Not Null");
-            ParticleSystem effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
+            GameObject effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
             effect.transform.forward = muzzle.forward;
-            effect.Emit(1);
+            //effect.Emit(1);
         }
         
         magAmmo -= 1;
