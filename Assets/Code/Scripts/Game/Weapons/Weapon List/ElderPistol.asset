@@ -20,7 +20,7 @@ MonoBehaviour:
   reloadTime: 1
   bulletSpeed: 10
   bulletDrop: 0
-  maxBulletLifeTime: 20
+  maxBulletLifeTime: 5
   shotCooldown: 0.1
   mainShotCost: 1
   alternativeShotCost: 0
@@ -32,9 +32,9 @@ MonoBehaviour:
   mainShotSound: {fileID: 8300000, guid: 2edfae1375f084df4b61a0ad70c30fb5, type: 3}
   alternativeShotSound: {fileID: 0}
   hitSound: {fileID: 0}
-  shotEffect: {fileID: 3875329135514961720, guid: 09e753e00edbb714ebf549c2dd326f01,
+  shotEffect: {fileID: 771705121304732445, guid: b20dc316001892b419d9b1e79eeb7451,
     type: 3}
-  trailShotEffect: {fileID: 8530891135317232908, guid: 0318a5d4e9f35b3499c3a51e7e053320,
+  trailShotEffect: {fileID: 8216613369871431088, guid: b589ada432b0a534e96af0b27ab44885,
     type: 3}
   hitEffect: {fileID: 3291244538907713110, guid: 4e25fca77bf9f0f4b810156a77203cb3,
     type: 3}

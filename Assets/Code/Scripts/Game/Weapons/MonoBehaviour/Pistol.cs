@@ -12,7 +12,6 @@ public class Pistol : Weapon
         
         if(shotEffect != null)
         {
-            Debug.Log("Not Null");
             GameObject effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
             effect.transform.localScale *= .5f;             //Da cambiare
             effect.transform.forward = -muzzle.forward;

@@ -18,6 +18,8 @@ public class PlayerInventoryHandler : MonoBehaviour
     [Space]
     [Header("SUONI")]
     [SerializeField] AudioClip perfectReloadSound;
+    [Header("Utility")]
+    [SerializeField] GameObject rightHand;
 
 
     //EVENTI
@@ -104,10 +106,10 @@ public class PlayerInventoryHandler : MonoBehaviour
     //Funzione per equipaggiare l'arma instanziando il modello 3D nella posizione desiderata
 
     private void EquipWeapon(GameObject weapon)
-    {
-        equippedWeapon = Instantiate(weapon, transform.Find("RightHand").position, Quaternion.LookRotation(-transform.forward));
+    {   
+        equippedWeapon = Instantiate(weapon, rightHand.transform.position, Quaternion.LookRotation(-transform.forward));
         //equippedObject = inventory.equippedObject;
-        equippedWeapon.transform.parent = transform.Find("RightHand");
+        equippedWeapon.transform.parent = rightHand.transform;
         equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z);
 
         Weapon weaponInfo = equippedWeapon.GetComponent<Weapon>();
@@ -124,7 +126,8 @@ public class PlayerInventoryHandler : MonoBehaviour
     }
     private void UnequipWeapon()
     {
-        Destroy(equippedWeapon);
+        if(equippedWeapon != null)
+            Destroy(equippedWeapon);
     }
     private void UnequipWeapon(float index)                            //Funzione per rimuovere i modelli 3D quando si cambia o butta un'arma
     {       

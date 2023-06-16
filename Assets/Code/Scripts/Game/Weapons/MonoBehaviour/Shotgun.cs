@@ -14,9 +14,8 @@ public class Shotgun : Weapon
         
         if(shotEffect != null)
         {
-            Debug.Log("Not Null");
             GameObject effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
-            effect.transform.forward = muzzle.forward;
+            effect.transform.forward = -muzzle.forward;
             //effect.Emit(1);
         }
         
@@ -24,7 +23,7 @@ public class Shotgun : Weapon
         bulletHandler.CreateShotgunBullet(muzzle, range, layerMaskToCheck);
 
         //Camera Shake
-        CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CameraShake>().Shake(1f, .2f);
+        CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera.VirtualCameraGameObject.GetComponent<CameraShake>().Shake(2f, .2f);
 
         StartCoroutine(StartShootingCooldown());   //Necessaria per il rateo di fuoco.
     }

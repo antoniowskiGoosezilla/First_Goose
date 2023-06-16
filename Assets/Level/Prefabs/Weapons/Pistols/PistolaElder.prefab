@@ -662,7 +662,7 @@ MonoBehaviour:
   type: 0
   rarity: 0
   firstInit: 1
-  audioSource: {fileID: 0}
+  audioSource: {fileID: 1852679817609984694}
   shotEffect: {fileID: 0}
   muzzle: {fileID: 9020844507600979617}
 --- !u!1001 &8046413518719239599

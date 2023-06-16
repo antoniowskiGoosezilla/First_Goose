@@ -29,6 +29,7 @@ namespace AntoNamespace
         //Componenti necessari
         private CharacterController characterController;
         private PlayerStatsHandler playerStatsHandler;
+        private PlayerAnimatorHandler playerAnimatorHandler;
         //Elementi utili per il movimento
         private float movementTimer;
         private Vector2 velocity;
@@ -54,6 +55,7 @@ namespace AntoNamespace
         {
             characterController = GetComponent<CharacterController>();
             playerStatsHandler = GetComponent<PlayerStatsHandler>();
+            playerAnimatorHandler = GetComponent<PlayerAnimatorHandler>();
 
             //Associamo al pulsante di roll l'azione da eseguire
             InputCustomSystem.OnRollAction += TriggerRoll;
@@ -78,8 +80,10 @@ namespace AntoNamespace
             }
 
             Vector3 movement = new Vector3(velocity.x, 0, velocity.y);
+            playerAnimatorHandler.UpdateAnimatorMovementValues(InputCustomSystem.inputMagnitude, 0);
             characterController.Move(movement*delta);
         }
+
         void HandlePlayerOrientation(float delta)
         {
             Quaternion toRotation = Quaternion.LookRotation(new Vector3(InputCustomSystem.horizontal, 0, InputCustomSystem.vertical), Vector3.up);

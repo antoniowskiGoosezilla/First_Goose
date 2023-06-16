@@ -143,6 +143,9 @@ public class BulletHandler : MonoBehaviour
 
     private void DestroyBullet()
     {
+        //Troppo pesante secondo me
+        List<Bullet> list = firedBullets.FindAll(bullet => bullet.time >= bullet.maxBulletLifeTime);
+        list.ForEach(bullet => Destroy(bullet.tracer));
         firedBullets.RemoveAll(bullet => bullet.time >= bullet.maxBulletLifeTime);
     }
     

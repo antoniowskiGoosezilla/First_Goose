@@ -12,7 +12,9 @@ public class Rifle : Weapon, IHoldable
         
         if(shotEffect != null)
         {
-            GameObject muzzleEffect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
+            GameObject effect = Instantiate(shotEffect, muzzle.position, Quaternion.identity);
+            effect.transform.localScale *= .5f;             //Da cambiare
+            effect.transform.forward = -muzzle.forward;
         }
             
 
