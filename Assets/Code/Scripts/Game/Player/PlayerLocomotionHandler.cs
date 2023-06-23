@@ -109,7 +109,7 @@ namespace AntoNamespace
         }
 
         IEnumerator Roll(){
-            //animatorHandler.PlayAnimationTarget("RollForward", true);
+            playerAnimatorHandler.PlayAnimationTarget("Roll", true);
             InputCustomSystem.isInteracting = true;
             float timer = 0.8f;                 //DURATA POCO PIU PICCOLA DELL'ANIMAZIONE ANIMAZIONE
             float rollTime = 0f;
