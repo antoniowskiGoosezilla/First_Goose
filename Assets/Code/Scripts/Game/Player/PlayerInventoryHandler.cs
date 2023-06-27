@@ -108,9 +108,9 @@ public class PlayerInventoryHandler : MonoBehaviour
     private void EquipWeapon(GameObject weapon)
     {   
         equippedWeapon = Instantiate(weapon, rightHand.transform.position, Quaternion.identity);
+        equippedWeapon.transform.forward = -transform.forward;
         //equippedObject = inventory.equippedObject;
         equippedWeapon.transform.parent = rightHand.transform;
-        equippedWeapon.transform.rotation = Quaternion.Euler(278.551849f,145.827286f,57.354641f);
         //equippedWeapon.transform.position = new Vector3(equippedWeapon.transform.position.x, equippedWeapon.transform.position.y, equippedWeapon.transform.position.z);
 
         Weapon weaponInfo = equippedWeapon.GetComponent<Weapon>();
