@@ -52,6 +52,7 @@ namespace AntoNamespace
         void Update()
         {
             Move();
+            
         }
     }
 }

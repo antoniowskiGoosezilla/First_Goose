@@ -13,7 +13,7 @@ namespace AntoNamespace
     [RequireComponent(typeof(PlayerStatsHandler))]
     [RequireComponent(typeof(PlayerAimHandler))]
     [RequireComponent(typeof(ComboHandler))]
-    [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(CapsuleCollider))]
     
     public class PlayerCore : MonoBehaviour
     {

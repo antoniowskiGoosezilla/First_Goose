@@ -14,7 +14,7 @@ public class AIAttackHandler : MonoBehaviour
     }
 
     //PRIVATE
-    private float shotCooldown = 1.5f;
+    private float shotCooldown = 3f;
 
 
 

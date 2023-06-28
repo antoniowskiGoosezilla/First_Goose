@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using AntoNamespace;
 
 public class BulletHandler : MonoBehaviour
 {
@@ -131,9 +132,17 @@ public class BulletHandler : MonoBehaviour
             {
                 Debug.LogError("Effetto Hit o Trail mancante");
             }
-            //Aggiungiamo i punti in caso di hit    
-            OnHit?.Invoke(100f); //TODO: Sostituire con i punti del personaggio
-            //Debug.Log("Colpito");
+            //Aggiungiamo i punti in caso di hit
+            AIStatsHandler enemyStatsHandler = hit.collider.gameObject.GetComponent<AIStatsHandler>();    
+            if(enemyStatsHandler != null)
+            {
+                OnHit?.Invoke(enemyStatsHandler.hitPoint);
+            }
+            else
+            {
+                OnHit?.Invoke(100f); 
+            }
+            
         }
         else
         {

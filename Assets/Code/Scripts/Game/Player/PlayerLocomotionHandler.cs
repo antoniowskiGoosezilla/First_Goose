@@ -81,7 +81,7 @@ namespace AntoNamespace
 
             Vector3 movement = new Vector3(velocity.x, 0, velocity.y);
             playerAnimatorHandler.UpdateAnimatorMovementValues(InputCustomSystem.inputMagnitude, 0);
-            characterController.Move(movement*delta);
+            transform.Translate(movement*delta, Space.World);
         }
 
         void HandlePlayerOrientation(float delta)
@@ -124,7 +124,7 @@ namespace AntoNamespace
                 timer -= Time.deltaTime;
                 rollTime += Time.deltaTime;
                 rollSpeed = rollSpeedCurve.Evaluate(rollTime);
-                characterController.Move(new Vector3(lookDirection.x, 0, lookDirection.z)*Time.deltaTime*rollSpeed);
+                transform.Translate(new Vector3(lookDirection.x, 0, lookDirection.z)*Time.deltaTime*rollSpeed, Space.World);
                 //animatorHandler.UpdateAnimatorMovementValues(0,0,InputCustomSystem.runFlag);
                 yield return null;
             }       

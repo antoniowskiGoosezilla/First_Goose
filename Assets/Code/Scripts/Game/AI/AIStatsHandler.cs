@@ -8,7 +8,8 @@ namespace AntoNamespace{
     {
 
         //PUBLIC
-
+        public float hitPoint = 50;
+        public float killPoint = 200;
 
         //PRIVATE
         private int level;

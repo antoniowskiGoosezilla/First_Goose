@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 935613635114515761}
   - component: {fileID: 2121100629842836822}
   - component: {fileID: 7647355681113286237}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -101,7 +101,7 @@ SphereCollider:
   m_GameObject: {fileID: 5181428566060661581}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -129,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c9f5d0a83eb5494eb4bc50556aab5db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 2
 --- !u!114 &5181428566060661576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 5181428567456724549}
   - component: {fileID: 5181428567456724548}
   - component: {fileID: 5181428567456724551}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}

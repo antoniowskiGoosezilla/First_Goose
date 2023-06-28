@@ -27,12 +27,12 @@ public class MoveState : State
                 }
                     
             }
+        }
 
-            if(!isMoving)
-            {
-                isMoving = true;
-                OnUpdateMovingCondition.Invoke(isMoving);
-            }
+        if(!isMoving)
+        {
+            isMoving = true;
+            OnUpdateMovingCondition.Invoke(isMoving);
         }
 
         //In caso contrario si continua a muovere
@@ -44,7 +44,7 @@ public class MoveState : State
     //PRIVATE
     private AIAttackHandler attackHandler;
     private GameObject player;
-    private float maxAttackDistance = 1000;
+    private float maxAttackDistance = 100;
     private bool isMoving;
     private bool goOn;
 
@@ -60,11 +60,17 @@ public class MoveState : State
 
     //Check per vedere se il player si trova nella sua linea visivo
     private bool CheckVision()
-    {
-        Ray raggio = new Ray(transform.position, player.transform.position - transform.position);
-        Debug.DrawRay(raggio.origin, raggio.direction, Color.red, 10);
-        if(Physics.Raycast(raggio, maxAttackDistance + 10, 0x64))
-            return true;
+    {   
+        if(Physics.Raycast(transform.position, player.transform.position - transform.position, out var hitInfo, maxAttackDistance + 10, 0x64))
+        {
+            Debug.Log("<red> Dentro");
+            if(hitInfo.collider.gameObject.tag == "Player")
+            {
+                Debug.Log("<red> Trovato");
+                return true;
+            }
+                
+        }
         
         return false;
     }
